@@ -1,0 +1,34 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: personnel-management-system
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/management_system?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: chenjinjie
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        globally_quoted_identifiers_skip_column_definitions: true
+        dialect: org.hibernate.dialect.MySQL57InnoDBDialect
+    open-in-view: true
+
+
+logging:
+  level:
+    com.Abouerp: debug
+
+
