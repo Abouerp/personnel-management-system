@@ -14,7 +14,7 @@ services:
     restart: always
 
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     container_name: personnel_mysql
     networks:
       - personnel_management
