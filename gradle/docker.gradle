@@ -1,0 +1,12 @@
+jib {
+    from {
+        image = 'openjdk:12'
+    }
+    to {
+        image = "abouerp.top/${project.name}"
+        tags = ['latest']
+    }
+    container {
+        labels = ['maintainer': 'techial "me@techial.top"']
+    }
+}
