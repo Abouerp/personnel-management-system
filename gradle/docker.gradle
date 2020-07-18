@@ -3,7 +3,7 @@ jib {
         image = 'openjdk:12'
     }
     to {
-        image = "abouerp.top/${project.name}"
+        image = "personnel_management"
         tags = ['latest']
     }
     container {
