@@ -15,6 +15,8 @@ services:
 
   mysql:
     image: mysql:5.7
+    expose:
+      - "3307"
     container_name: personnel_mysql
     networks:
       - personnel_management
