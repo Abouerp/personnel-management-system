@@ -23,7 +23,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./deploy/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-      - personnel_management_mysql_data:/var/lib/mysql
+      - personnel_management_mysql_data:/var/lib/mysql2
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     restart: always
