@@ -1,0 +1,23 @@
+#name: Project build and deploy
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#
+#jobs:
+#  build-and-deploy:
+#    name: Build and deploy
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Executing remote ssh commands
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          key: ${{ secrets.KEY }}
+#          port: ${{ secrets.PORT }}
+#          script: |
+#            cd /root/personnel-management-system
+#            chmod +x ./deploy/deploy.sh
+#            ./deploy/deploy.sh
