@@ -14,7 +14,7 @@ services:
     restart: always
 
   mysql:
-    image: mysql
+    image: mysql/personnel_mysql:latest
     networks:
       - personnel_management
     volumes:
