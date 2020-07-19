@@ -1,27 +1,17 @@
-plugins {
-    id 'java'
-    id 'idea'
+buildscript {
+    ext {
+        springBootVersion = '2.2.2.RELEASE'
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 group = 'zsc.edu.abouerp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 bootJar.enabled = true
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-jar {
-    manifest {
-        attributes 'Main-Class': '项目的main-class'
-    }
-    enabled = true
-}
+
 dependencies {
     implementation project(':common')
 
