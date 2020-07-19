@@ -19,6 +19,9 @@ configurations {
     }
 }
 jar {
+    manifest {
+        attributes 'Main-Class': '项目的main-class'
+    }
     enabled = true
 }
 dependencies {
