@@ -1,11 +1,10 @@
 buildscript {
     ext {
-        //这里管理版本
         springbootVersion = '2.2.2.RELEASE'
     }
     dependencies {
         //spring-boot插件
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springbootVersion")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springbootVersion"
     }
 }
 
@@ -73,4 +72,8 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
     }
+}
+bootJar {
+//    enabled = "true"
+    mainClassName = "zsc.edu.abouerp.api.ApiApplication"
 }

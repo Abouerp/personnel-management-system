@@ -1,27 +1,14 @@
 group = 'zsc.edu.abouerp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-//bootJar.enabled = true
-bootJar {
-    enabled = "true"
-    mainClassName = "zsc.edu.abouerp.api.ApiApplication"
-}
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
+jar.enabled=true
 
 dependencies {
     implementation project(':common')
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-//    compile 'org.springframework.boot:spring-boot-starter-webflux'
-//    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.springframework.boot:spring-boot-starter-webflux'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'mysql:mysql-connector-java'
@@ -43,9 +30,9 @@ dependencies {
 
 }
 
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
 sourceSets {
     main {
         resources {
