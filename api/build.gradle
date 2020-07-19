@@ -11,6 +11,15 @@ group = 'zsc.edu.abouerp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 bootJar.enabled = true
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 dependencies {
     implementation project(':common')
