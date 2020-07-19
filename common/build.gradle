@@ -2,5 +2,8 @@ group = 'zsc.edu.abouerp'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 jar.enabled=true
-
+bootJar {
+//    enabled = "true"
+    mainClassName = "zsc.edu.abouerp.api.ApiApplication"
+}
 

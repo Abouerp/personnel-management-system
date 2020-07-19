@@ -7,8 +7,8 @@ dependencies {
     implementation project(':common')
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    compile 'org.springframework.boot:spring-boot-starter-webflux'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
+//    compile 'org.springframework.boot:spring-boot-starter-webflux'
+//    testCompile 'org.springframework.boot:spring-boot-starter-test'
 
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'mysql:mysql-connector-java'
@@ -24,9 +24,9 @@ dependencies {
     annotationProcessor 'com.querydsl:querydsl-apt:4.2.1:jpa'
     annotationProcessor 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'com.querydsl:querydsl-jpa:4.2.1'
-    testAnnotationProcessor('org.springframework.boot:spring-boot-starter-data-jpa')
-    testAnnotationProcessor('com.querydsl:querydsl-jpa')
-    testAnnotationProcessor('com.querydsl:querydsl-apt')
+//    testAnnotationProcessor('org.springframework.boot:spring-boot-starter-data-jpa')
+//    testAnnotationProcessor('com.querydsl:querydsl-jpa')
+//    testAnnotationProcessor('com.querydsl:querydsl-apt')
 
 }
 

@@ -1,12 +1,12 @@
-buildscript {
-    ext {
-        springbootVersion = '2.2.2.RELEASE'
-    }
-    dependencies {
-        //spring-boot插件
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springbootVersion"
-    }
-}
+//buildscript {
+//    ext {
+//        springbootVersion = '2.2.2.RELEASE'
+//    }
+//    dependencies {
+//        //spring-boot插件
+//        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springbootVersion"
+//    }
+//}
 
 plugins {
     id 'java'
