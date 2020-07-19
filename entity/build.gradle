@@ -1,7 +1,22 @@
 group = 'zsc.edu.abouerp.entity'
 
-dependencies {
-    
+
+bootJar {
+    enabled = true
 }
 
+jar {
+    enabled = true
+}
 
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    runtimeOnly 'mysql:mysql-connector-java'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    annotationProcessor 'com.querydsl:querydsl-apt:4.2.1:jpa'
+    annotationProcessor 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'com.querydsl:querydsl-jpa:4.2.1'
+    testCompile 'org.springframework.security:spring-security-test:5.1.5.RELEASE'
+}

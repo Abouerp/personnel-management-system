@@ -1,6 +1,11 @@
 group = 'zsc.edu.abouerp.common'
 
-dependencies {
+bootJar {
+    enabled = true
+}
+
+jar {
+    enabled = true
 }
 
 

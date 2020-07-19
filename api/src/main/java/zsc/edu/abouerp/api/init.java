@@ -2,11 +2,11 @@ package zsc.edu.abouerp.api;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import zsc.edu.abouerp.api.domain.Administrator;
-import zsc.edu.abouerp.api.domain.Authority;
-import zsc.edu.abouerp.api.domain.Role;
-import zsc.edu.abouerp.api.repository.AdministratorRepository;
-import zsc.edu.abouerp.api.repository.RoleRepository;
+import zsc.edu.abouerp.entity.domain.Administrator;
+import zsc.edu.abouerp.entity.domain.Authority;
+import zsc.edu.abouerp.entity.domain.Role;
+import zsc.edu.abouerp.service.repository.AdministratorRepository;
+import zsc.edu.abouerp.service.repository.RoleRepository;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

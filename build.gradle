@@ -1,3 +1,8 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+}
+
 allprojects {
     repositories {
         mavenCentral()
@@ -7,8 +12,11 @@ allprojects {
 
 subprojects {
     version = '0.0.1-SNAPSHOT'
+
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
     dependencies {
         compileOnly 'org.projectlombok:lombok:1.18.12'
@@ -20,5 +28,10 @@ subprojects {
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+
+    bootJar {
+        mainClassName = "zsc.edu.abouerp.api.ApiApplication"
+        enabled = true
+    }
 }
 

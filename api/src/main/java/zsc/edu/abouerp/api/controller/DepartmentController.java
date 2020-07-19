@@ -4,11 +4,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import zsc.edu.abouerp.api.domain.Department;
-import zsc.edu.abouerp.api.mapper.DepartmentMapper;
-import zsc.edu.abouerp.api.service.DepartmentService;
-import zsc.edu.abouerp.api.vo.DepartmentVO;
 import zsc.edu.abouerp.common.entiry.ResultBean;
+import zsc.edu.abouerp.entity.domain.Department;
+import zsc.edu.abouerp.entity.vo.DepartmentVO;
+import zsc.edu.abouerp.service.mapper.DepartmentMapper;
+import zsc.edu.abouerp.service.service.DepartmentService;
 
 /**
  * @author Abouerp

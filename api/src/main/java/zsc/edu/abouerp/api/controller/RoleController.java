@@ -5,12 +5,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import zsc.edu.abouerp.api.domain.Role;
-import zsc.edu.abouerp.api.exception.RoleNotFoundException;
-import zsc.edu.abouerp.api.mapper.RoleMapper;
-import zsc.edu.abouerp.api.service.RoleService;
-import zsc.edu.abouerp.api.vo.RoleVO;
 import zsc.edu.abouerp.common.entiry.ResultBean;
+import zsc.edu.abouerp.entity.domain.Role;
+import zsc.edu.abouerp.entity.vo.RoleVO;
+import zsc.edu.abouerp.service.exception.RoleNotFoundException;
+import zsc.edu.abouerp.service.mapper.RoleMapper;
+import zsc.edu.abouerp.service.service.RoleService;
 
 /**
  * @author Abouerp
