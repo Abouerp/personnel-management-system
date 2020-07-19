@@ -33,48 +33,30 @@ public class Administrator implements Serializable {
 
     @Column(unique = true)
     private String username;
-
     private String password;
-
     private String mobile;
-
     private String email;
-
     private String address;
-
     private String number;
-
     private String idCard;
-
     private String description;
-
     private Double wage;
-
     private PersonnelStatus status;
-
     private Boolean accountNonExpired;
-
     private Boolean accountNonLocked;
-
     private Boolean credentialsNonExpired;
-
     private Boolean enabled;
 
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
-
     @ManyToOne
     private Station station;
-
     @CreatedBy
     private Integer createBy;
-
     @LastModifiedBy
     private Integer updateBy;
-
     @CreationTimestamp
     private Instant createTime;
-
     @UpdateTimestamp
     private Instant updateTime;
 }

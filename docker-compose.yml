@@ -14,7 +14,7 @@ services:
     restart: always
 
   mysql:
-    image: mysql:5.7
+    image: mysql:latest
     expose:
       - "3307"
     container_name: personnel_mysql
@@ -23,7 +23,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./deploy/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-      - personnel_management_mysql_data:/var/lib/mysql2
+      - personnel_management_mysql_data:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     restart: always
