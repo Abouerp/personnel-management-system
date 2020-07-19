@@ -18,7 +18,9 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
-
+jar {
+    enabled = true
+}
 dependencies {
     implementation project(':common')
 //    compile 'org.springframework.boot:spring-boot-starter-web'
