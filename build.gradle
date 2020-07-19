@@ -74,8 +74,3 @@ subprojects {
         testAnnotationProcessor 'org.projectlombok:lombok'
     }
 }
-
-tasks.withType<BootJar> {
-    archiveFileName.set("app.jar")
-    mainClassName = "zsc.edu.abouerp.api.ApiApplication"
-}
