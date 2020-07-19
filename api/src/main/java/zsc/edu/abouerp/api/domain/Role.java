@@ -52,5 +52,4 @@ public class Role implements Serializable {
 
     @UpdateTimestamp
     private Instant updateTime;
-
 }

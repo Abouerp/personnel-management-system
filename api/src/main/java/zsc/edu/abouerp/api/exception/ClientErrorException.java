@@ -1,6 +1,5 @@
 package zsc.edu.abouerp.api.exception;
 
-
 import zsc.edu.abouerp.common.entiry.ResultBean;
 
 /**

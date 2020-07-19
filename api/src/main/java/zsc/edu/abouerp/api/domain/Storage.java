@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 /**
  * @author Abouerp
  */
@@ -24,5 +23,4 @@ public class Storage implements Serializable {
     private String sha1;
     private String originalFilename;
     private String contentType;
-
 }

@@ -1,6 +1,5 @@
 package zsc.edu.abouerp.api.security;
 
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final LogoutHandler logoutHandler;
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
-
 
     public SecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler,
                           AuthenticationFailureHandler authenticationFailureHandler,
@@ -73,8 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder);
+            .passwordEncoder(passwordEncoder);
     }
-
-
 }

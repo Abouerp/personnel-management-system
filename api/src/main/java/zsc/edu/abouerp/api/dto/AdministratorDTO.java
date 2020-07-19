@@ -1,6 +1,5 @@
 package zsc.edu.abouerp.api.dto;
 
-
 import lombok.Data;
 import zsc.edu.abouerp.api.domain.PersonnelStatus;
 import zsc.edu.abouerp.api.domain.Role;

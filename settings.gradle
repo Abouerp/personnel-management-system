@@ -1,3 +1,4 @@
 rootProject.name = 'personnel-management-system'
-include ':common'
-include ':api'
+
+include 'common'
+include 'api'

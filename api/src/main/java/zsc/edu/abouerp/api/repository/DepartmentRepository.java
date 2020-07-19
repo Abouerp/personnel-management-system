@@ -9,5 +9,5 @@ import zsc.edu.abouerp.api.domain.Department;
  * @author Abouerp
  */
 @Repository
-public interface DepartmentRepository extends JpaRepository<Department,Integer>, QuerydslPredicateExecutor<Department> {
+public interface DepartmentRepository extends JpaRepository<Department, Integer>, QuerydslPredicateExecutor<Department> {
 }

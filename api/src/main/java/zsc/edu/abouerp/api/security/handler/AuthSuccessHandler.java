@@ -1,6 +1,5 @@
 package zsc.edu.abouerp.api.security.handler;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -29,9 +28,5 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.OK.value());
         response.getWriter().write(objectMapper.writeValueAsString(ResultBean.ok()));
-
     }
-
-
-
 }

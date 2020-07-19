@@ -12,15 +12,13 @@ import zsc.edu.abouerp.common.entiry.ResultBean;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static ResponseEntity<ResultBean<Object>> handleException(ClientErrorException exception) {
+        return ResponseEntity.status(exception.getCode())
+                             .body(exception.getResultBean());
+    }
 
     @ExceptionHandler(ClientErrorException.class)
     public HttpEntity<ResultBean<Object>> clientErrorException(ClientErrorException ex) {
         return handleException(ex);
     }
-
-    private static ResponseEntity<ResultBean<Object>> handleException(ClientErrorException exception) {
-        return ResponseEntity.status(exception.getCode())
-                .body(exception.getResultBean());
-    }
-
 }

@@ -1,79 +1,24 @@
-//buildscript {
-//    ext {
-//        springbootVersion = '2.2.2.RELEASE'
-//    }
-//    dependencies {
-//        //spring-boot插件
-//        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springbootVersion"
-//    }
-//}
-
-plugins {
-    id 'java'
-    id 'idea'
-    id 'org.springframework.boot' version '2.2.2.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
-    id 'com.google.cloud.tools.jib' version '1.8.0'
-}
-
-group = 'zsc.edu.abouerp'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-apply from: "gradle/docker.gradle"
-
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    mavenCentral()
-}
-/**
- * 所有子项目的通用配置
- */
-subprojects {
-    /* 使用二进制插件 */
-    apply plugin: 'java' /* java是Gradle的核心插件，是内置的，内置插件不需要配置依赖路径 */
-    apply plugin: 'idea' /* 同上  让Gradle自动生成Intellij的项目文件*/
-    /* 注意gradle插件不再自动应用，所以这里需要指定 */
-    apply plugin: 'org.springframework.boot'
-    /* 依赖管理插件仍然是一个spring-boot-gradle-plugin传递依赖，所以无需在build.gradle配置中明确列出此依赖。 */
-    apply plugin: 'io.spring.dependency-management' /* 依赖管理，用来传递spring的依赖 */
-
-    group = 'zsc.edu.abouerp'
-    version = '0.0.1' /* 项目版本 */
-    /* 指定jdk版本 */
-    sourceCompatibility = '1.8'
-    /* java编译的时候缺省状态下会因为中文字符而失败 */
-    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
-
+allprojects {
     repositories {
-        mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         mavenCentral()
+        mavenLocal()
     }
+}
 
-    /* 添加通用依赖 */
+subprojects {
+    version = '0.0.1-SNAPSHOT'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        compileOnly 'org.projectlombok:lombok:1.18.12'
+        annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
-        //    // lombok config
-        compileOnly 'org.projectlombok:lombok'
-        testCompileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
-        testAnnotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok:1.18.12'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     }
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
-bootJar {
-//    enabled = "true"
-    mainClassName = "zsc.edu.abouerp.api.ApiApplication"
-}
+

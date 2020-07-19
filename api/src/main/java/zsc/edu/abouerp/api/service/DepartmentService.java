@@ -16,12 +16,11 @@ public class DepartmentService {
         this.departmentRepository = departmentRepository;
     }
 
-    public Department save(Department department){
+    public Department save(Department department) {
         return departmentRepository.save(department);
     }
 
     public void delete(Integer id) {
         departmentRepository.deleteById(id);
     }
-
 }

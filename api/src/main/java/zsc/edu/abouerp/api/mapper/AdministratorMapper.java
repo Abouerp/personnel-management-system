@@ -1,6 +1,5 @@
 package zsc.edu.abouerp.api.mapper;
 
-
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -24,18 +23,17 @@ public interface AdministratorMapper {
 
     AdministratorMapper INSTANCE = Mappers.getMapper(AdministratorMapper.class);
 
-
     AdministratorDTO toDTO(Administrator administrator);
 
     Administrator toAdmin(AdministratorVO adminVO);
 
     default UserPrincipal toUserPrincipal(Administrator administrator) {
         List<SimpleGrantedAuthority> authorities = administrator.getRoles()
-                .parallelStream()
-                .map(Role::getAuthorities)
-                .flatMap(Set::stream)
-                .map(Authority::springAuthority)
-                .collect(Collectors.toList());
+                                                                .parallelStream()
+                                                                .map(Role::getAuthorities)
+                                                                .flatMap(Set::stream)
+                                                                .map(Authority::springAuthority)
+                                                                .collect(Collectors.toList());
         return new UserPrincipal(
                 administrator.getId(),
                 administrator.getUsername(),

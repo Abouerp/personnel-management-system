@@ -1,15 +1,11 @@
 package zsc.edu.abouerp.api.controller;
 
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import zsc.edu.abouerp.api.domain.Administrator;
 import zsc.edu.abouerp.api.dto.AdministratorDTO;
 import zsc.edu.abouerp.api.mapper.AdministratorMapper;
@@ -20,12 +16,8 @@ import zsc.edu.abouerp.api.service.RoleService;
 import zsc.edu.abouerp.api.vo.AdministratorVO;
 import zsc.edu.abouerp.common.entiry.ResultBean;
 
-
-import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Abouerp
@@ -39,7 +31,6 @@ public class AdministratorController {
     private final PasswordEncoder passwordEncoder;
     private final AdministratorService administratorService;
 
-
     public AdministratorController(AdministratorRepository administratorRepository,
                                    RoleService roleService,
                                    PasswordEncoder passwordEncoder,
@@ -48,7 +39,6 @@ public class AdministratorController {
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.administratorService = administratorService;
-
     }
 
     private static Administrator update(Administrator administrator, AdministratorVO adminVO) {

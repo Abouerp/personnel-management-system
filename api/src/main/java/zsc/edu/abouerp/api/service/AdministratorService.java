@@ -10,7 +10,6 @@ import zsc.edu.abouerp.api.domain.QAdministrator;
 import zsc.edu.abouerp.api.repository.AdministratorRepository;
 import zsc.edu.abouerp.api.repository.RoleRepository;
 
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -68,14 +67,11 @@ public class AdministratorService {
 
     public Administrator updateRoles(Integer id, List<Integer> roles) {
         Administrator admin = administratorRepository.getOne(id)
-                .setRoles(new HashSet<>(roleRepository.findByIdIn(roles)));
+                                                     .setRoles(new HashSet<>(roleRepository.findByIdIn(roles)));
         return administratorRepository.save(admin);
     }
 
     public void deleteById(Integer id) {
         administratorRepository.deleteById(id);
     }
-
-
-
 }

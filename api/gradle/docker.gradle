@@ -3,11 +3,10 @@ jib {
         image = 'openjdk:12'
     }
     to {
-        image = "personnel_management"
+        image = "personnel_management:api"
         tags = ['latest']
     }
     container {
-        mainClass = "ApiApplication"
         labels = ['maintainer': 'abouerp "me@abouerp.top"']
     }
 }
