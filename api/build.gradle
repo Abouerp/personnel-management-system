@@ -9,7 +9,7 @@ apply from: "gradle/docker.gradle"
 
 dependencies {
     implementation project(':common')
-
+    implementation project(':entity')
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-web'

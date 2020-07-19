@@ -1,4 +1,4 @@
-package zsc.edu.abouerp.api.domain;
+package zsc.edu.abouerp.entity;
 
 /**
  * @author Abouerp

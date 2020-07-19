@@ -1,8 +1,7 @@
-package zsc.edu.abouerp.api.domain;
+package zsc.edu.abouerp.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**

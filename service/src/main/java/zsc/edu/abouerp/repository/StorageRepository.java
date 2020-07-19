@@ -2,7 +2,7 @@ package zsc.edu.abouerp.api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import zsc.edu.abouerp.api.domain.Storage;
+import zsc.edu.abouerp.entity.Storage;
 
 import java.util.Optional;
 

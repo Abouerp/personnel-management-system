@@ -2,3 +2,5 @@ rootProject.name = 'personnel-management-system'
 
 include 'common'
 include 'api'
+include 'entity'
+include 'service'
