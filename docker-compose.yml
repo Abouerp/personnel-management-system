@@ -26,7 +26,7 @@ services:
     restart: always
 
 networks:
-  personnel_management:
+  textbook:
     external: true
 
 volumes:
