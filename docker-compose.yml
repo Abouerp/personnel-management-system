@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   web:
-    image: personnel-management:api
+    image: personnel-management:latest
     networks:
       - personnel-management
     depends_on:
