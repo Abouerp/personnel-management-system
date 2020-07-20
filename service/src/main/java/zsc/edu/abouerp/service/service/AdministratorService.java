@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zsc.edu.abouerp.entity.domain.Administrator;
 import zsc.edu.abouerp.entity.domain.QAdministrator;
+import zsc.edu.abouerp.entity.vo.AdministratorVO;
 import zsc.edu.abouerp.service.repository.AdministratorRepository;
 import zsc.edu.abouerp.service.repository.RoleRepository;
 
@@ -47,7 +48,7 @@ public class AdministratorService {
         return administratorRepository.findFirstByUsername(username);
     }
 
-    public Page<Administrator> findAll(Administrator administrator, Pageable pageable) {
+    public Page<Administrator> findAll(AdministratorVO administrator, Pageable pageable) {
         QAdministrator qAdministrator = QAdministrator.administrator;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         if (administrator != null && administrator.getUsername() != null && !administrator.getUsername().isEmpty()) {
@@ -71,7 +72,7 @@ public class AdministratorService {
         return administratorRepository.save(admin);
     }
 
-    public void deleteById(Integer id) {
+    public void delete(Integer id) {
         administratorRepository.deleteById(id);
     }
 }

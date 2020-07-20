@@ -1,12 +1,13 @@
 package zsc.edu.abouerp.api.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
 import zsc.edu.abouerp.common.entiry.ResultBean;
 import zsc.edu.abouerp.entity.domain.Department;
 import zsc.edu.abouerp.entity.vo.DepartmentVO;
+import zsc.edu.abouerp.service.exception.DepartmentNotFoundException;
 import zsc.edu.abouerp.service.mapper.DepartmentMapper;
 import zsc.edu.abouerp.service.service.DepartmentService;
 
@@ -42,5 +43,24 @@ public class DepartmentController {
     @PostMapping
     public ResultBean<Department> save(@RequestBody DepartmentVO departmentVO) {
         return ResultBean.ok(departmentService.save(DepartmentMapper.INSTANCE.toDepartment(departmentVO)));
+    }
+
+    @PutMapping("/{id}")
+    public ResultBean<Department> update(@PathVariable Integer id, @RequestBody DepartmentVO departmentVO) {
+        Department department = departmentService.findById(id).orElseThrow(DepartmentNotFoundException::new);
+        return ResultBean.ok(departmentService.save(update(department, departmentVO)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResultBean delete(@PathVariable Integer id) {
+        departmentService.delete(id);
+        return ResultBean.ok();
+    }
+
+    @GetMapping
+    public ResultBean<Page<Department>> findAll(
+            @PageableDefault Pageable pageable,
+            DepartmentVO departmentVO){
+        return ResultBean.ok(departmentService.findAll(departmentVO,pageable));
     }
 }
