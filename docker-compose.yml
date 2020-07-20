@@ -4,8 +4,8 @@ services:
     image: personnel-management/abouerp:latest
     networks:
       - textbook
-    depends_on:
-      - mysql
+#    depends_on:
+#      - mysql
     ports:
       - 9090:9090
     volumes:
@@ -13,23 +13,23 @@ services:
       - ./deploy/resources/application.yml:/app/resources/application.yml:ro
     restart: always
 
-  mysql:
-    image: mysql
-    networks:
-      - textbook
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./deploy/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-      - textbook_mysql_data:/var/lib/mysql
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    restart: always
+#  mysql:
+#    image: mysql
+#    networks:
+#      - textbook
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - ./deploy/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+#      - textbook_mysql_data:/var/lib/mysql
+#    environment:
+#      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+#    restart: always
 
 networks:
   textbook:
     external: true
 
-volumes:
-  textbook_mysql_data:
-    external: true
+#volumes:
+#  textbook_mysql_data:
+#    external: true
 
