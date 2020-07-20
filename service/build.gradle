@@ -1,5 +1,9 @@
-group = 'zsc.edu.abouerp.service'
+plugins {
+    id 'net.ltgt.apt' version '0.15'
+}
 
+group = 'zsc.edu.abouerp.service'
+apply plugin: 'net.ltgt.apt-idea'
 
 bootJar {
     enabled = true
