@@ -3,7 +3,7 @@ services:
   web:
     image: personnel-management/abouerp:latest
     networks:
-      - personnel_management
+      - textbook
     depends_on:
       - mysql
     ports:
@@ -14,16 +14,13 @@ services:
     restart: always
 
   mysql:
-    image: mysql:latest
-    expose:
-      - "3307"
-    container_name: personnel_mysql
+    image: mysql
     networks:
-      - personnel_management
+      - textbook
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./deploy/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-      - personnel_management_mysql_data:/var/lib/mysql
+      - textbook_mysql_data:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     restart: always
@@ -33,6 +30,6 @@ networks:
     external: true
 
 volumes:
-  personnel_management_mysql_data:
+  textbook_mysql_data:
     external: true
 
