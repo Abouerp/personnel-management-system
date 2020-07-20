@@ -3,7 +3,7 @@ jib {
         image = 'openjdk:12'
     }
     to {
-        image = "personnel_management:api"
+        image = "personnel_management"
         tags = ['latest']
     }
     container {
