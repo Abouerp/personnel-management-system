@@ -7,7 +7,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 9090:9090
+      - 3333:9090
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./deploy/resources/application.yml:/app/resources/application.yml:ro
