@@ -60,7 +60,7 @@ public class DepartmentController {
     @GetMapping
     public ResultBean<Page<Department>> findAll(
             @PageableDefault Pageable pageable,
-            DepartmentVO departmentVO){
-        return ResultBean.ok(departmentService.findAll(departmentVO,pageable));
+            DepartmentVO departmentVO) {
+        return ResultBean.ok(departmentService.findAll(departmentVO, pageable));
     }
 }

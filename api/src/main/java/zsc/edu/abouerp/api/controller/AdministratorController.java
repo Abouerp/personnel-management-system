@@ -177,11 +177,11 @@ public class AdministratorController {
 
 
     @GetMapping("/judge")
-    public ResultBean<Boolean> judgeUserName(String username){
+    public ResultBean<Boolean> judgeUserName(String username) {
         Administrator administrator = administratorService.findFirstByUsername(username).orElse(null);
         if (administrator != null) {
             return ResultBean.ok(true);
-        }else {
+        } else {
             return ResultBean.ok(false);
         }
     }

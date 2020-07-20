@@ -31,25 +31,25 @@ public class DepartmentService {
         departmentRepository.deleteById(id);
     }
 
-    public Optional<Department> findById(Integer id){
+    public Optional<Department> findById(Integer id) {
         return departmentRepository.findById(id);
     }
 
-    public Page<Department> findAll(DepartmentVO departmentVO, Pageable pageable){
+    public Page<Department> findAll(DepartmentVO departmentVO, Pageable pageable) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QDepartment qDepartment = QDepartment.department;
-        if (departmentVO == null){
+        if (departmentVO == null) {
             return departmentRepository.findAll(pageable);
         }
-        if (departmentVO.getNumber()!=null && !departmentVO.getNumber().isEmpty()){
+        if (departmentVO.getNumber() != null && !departmentVO.getNumber().isEmpty()) {
             booleanBuilder.and(qDepartment.number.containsIgnoreCase(departmentVO.getNumber()));
         }
-        if (departmentVO.getName()!=null && !departmentVO.getName().isEmpty()){
+        if (departmentVO.getName() != null && !departmentVO.getName().isEmpty()) {
             booleanBuilder.and(qDepartment.name.containsIgnoreCase(departmentVO.getName()));
         }
-        if (departmentVO.getDescription()!=null && !departmentVO.getDescription().isEmpty()){
+        if (departmentVO.getDescription() != null && !departmentVO.getDescription().isEmpty()) {
             booleanBuilder.and(qDepartment.description.containsIgnoreCase(departmentVO.getDescription()));
         }
-        return departmentRepository.findAll(booleanBuilder,pageable);
+        return departmentRepository.findAll(booleanBuilder, pageable);
     }
 }

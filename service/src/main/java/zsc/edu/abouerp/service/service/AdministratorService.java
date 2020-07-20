@@ -68,7 +68,7 @@ public class AdministratorService {
 
     public Administrator updateRoles(Integer id, List<Integer> roles) {
         Administrator admin = administratorRepository.getOne(id)
-                                                     .setRoles(new HashSet<>(roleRepository.findByIdIn(roles)));
+                .setRoles(new HashSet<>(roleRepository.findByIdIn(roles)));
         return administratorRepository.save(admin);
     }
 
