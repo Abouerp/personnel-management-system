@@ -29,7 +29,6 @@ public class Department implements Serializable {
     private String name;
     private String number;
     private String description;
-    private Integer parentId;
     @CreatedBy
     private Integer createBy;
     @LastModifiedBy
