@@ -7,10 +7,9 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/management_system?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8
-    url: jdbc:mysql://mysql/management_system?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/management_system?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8
     username: root
-#    password: chenjinjie
+    password: chenjinjie
 
   jpa:
     generate-ddl: true
