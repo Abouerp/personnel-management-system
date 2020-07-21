@@ -22,6 +22,7 @@ public class AdministratorVO {
     private String idCard;
     private String description;
     private Double wage;
+    private String sex;
     private PersonnelStatus status;
     private List<Integer> role;
     private Boolean accountNonExpired = true;

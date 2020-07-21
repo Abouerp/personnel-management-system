@@ -42,6 +42,7 @@ public class Administrator implements Serializable {
     private String idCard;
     private String description;
     private Double wage;
+    private String sex;
     private PersonnelStatus status;
     private Boolean accountNonExpired;
     private Boolean accountNonLocked;
