@@ -34,6 +34,7 @@ public class Administrator implements Serializable {
     @Column(unique = true)
     private String username;
     private String password;
+    private String realName;
     private String mobile;
     private String email;
     private String address;
