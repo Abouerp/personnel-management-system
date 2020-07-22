@@ -37,18 +37,10 @@ public class Administrator implements Serializable {
     private String realName;
     private String mobile;
     private String email;
-    private String address;
-    private String number;
-    private String idCard;
-    private String description;
-    private Double wage;
-    private String sex;
-    private PersonnelStatus status;
     private Boolean accountNonExpired;
     private Boolean accountNonLocked;
     private Boolean credentialsNonExpired;
     private Boolean enabled;
-
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
     @ManyToOne
