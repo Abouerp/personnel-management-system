@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
+ * 岗位
  * @author Abouerp
  */
 @Entity

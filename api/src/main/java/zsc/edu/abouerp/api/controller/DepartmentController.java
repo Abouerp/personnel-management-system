@@ -29,7 +29,7 @@ public class DepartmentController {
             return department;
         }
         if (departmentVO.getName() != null) {
-            department.setName(department.getName());
+            department.setName(departmentVO.getName());
         }
         if (departmentVO.getDescription() != null) {
             department.setDescription(departmentVO.getDescription());
