@@ -1,8 +1,6 @@
 package zsc.edu.abouerp.entity.vo;
 
 import lombok.Data;
-import zsc.edu.abouerp.entity.domain.PersonnelStatus;
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
