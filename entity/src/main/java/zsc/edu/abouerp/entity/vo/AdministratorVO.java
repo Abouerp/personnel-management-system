@@ -17,13 +17,6 @@ public class AdministratorVO {
     private String realName;
     private String mobile;
     private String email;
-    private String address;
-    private String number;
-    private String idCard;
-    private String description;
-    private Double wage;
-    private String sex;
-    private PersonnelStatus status;
     private List<Integer> role;
     private Boolean accountNonExpired = true;
     private Boolean accountNonLocked = true;
