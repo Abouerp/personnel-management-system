@@ -49,6 +49,9 @@ public class RoleService {
         if (roleVO.getName() != null && !roleVO.getName().isEmpty()) {
             booleanBuilder.and(qRole.name.containsIgnoreCase(roleVO.getName()));
         }
+        if (roleVO.getDescription()!=null && !roleVO.getDescription().isEmpty()){
+            booleanBuilder.and(qRole.description.containsIgnoreCase(roleVO.getDescription()));
+        }
         return roleRepository.findAll(booleanBuilder, pageable);
     }
 

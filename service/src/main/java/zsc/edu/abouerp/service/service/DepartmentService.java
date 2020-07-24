@@ -38,16 +38,14 @@ public class DepartmentService {
     public Page<Department> findAll(DepartmentVO departmentVO, Pageable pageable) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QDepartment qDepartment = QDepartment.department;
-        if (departmentVO == null) {
-            return departmentRepository.findAll(pageable);
-        }
-        if (departmentVO.getNumber() != null && !departmentVO.getNumber().isEmpty()) {
+
+        if (departmentVO != null && departmentVO.getNumber() != null && !departmentVO.getNumber().isEmpty()) {
             booleanBuilder.and(qDepartment.number.containsIgnoreCase(departmentVO.getNumber()));
         }
-        if (departmentVO.getName() != null && !departmentVO.getName().isEmpty()) {
+        if (departmentVO != null && departmentVO.getName() != null && !departmentVO.getName().isEmpty()) {
             booleanBuilder.and(qDepartment.name.containsIgnoreCase(departmentVO.getName()));
         }
-        if (departmentVO.getDescription() != null && !departmentVO.getDescription().isEmpty()) {
+        if (departmentVO != null && departmentVO.getDescription() != null && !departmentVO.getDescription().isEmpty()) {
             booleanBuilder.and(qDepartment.description.containsIgnoreCase(departmentVO.getDescription()));
         }
         return departmentRepository.findAll(booleanBuilder, pageable);

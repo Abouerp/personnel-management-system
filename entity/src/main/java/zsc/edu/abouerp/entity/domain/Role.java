@@ -32,24 +32,18 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String name;
-
     private String description;
-
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities = new HashSet<>();
 
     @CreatedBy
     private Integer createBy;
-
     @LastModifiedBy
     private Integer updateBy;
-
     @CreationTimestamp
     private Instant createTime;
-
     @UpdateTimestamp
     private Instant updateTime;
 }
