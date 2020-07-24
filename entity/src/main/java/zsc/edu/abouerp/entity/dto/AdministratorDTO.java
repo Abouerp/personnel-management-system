@@ -1,7 +1,6 @@
 package zsc.edu.abouerp.entity.dto;
 
 import lombok.Data;
-import zsc.edu.abouerp.entity.domain.PersonnelStatus;
 import zsc.edu.abouerp.entity.domain.Role;
 
 import java.util.Set;

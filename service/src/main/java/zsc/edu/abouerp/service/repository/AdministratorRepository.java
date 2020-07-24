@@ -6,6 +6,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import zsc.edu.abouerp.entity.domain.Administrator;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
