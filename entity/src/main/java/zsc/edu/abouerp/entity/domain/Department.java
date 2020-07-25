@@ -27,7 +27,6 @@ public class Department implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String number;
     private String description;
     @CreatedBy
     private Integer createBy;

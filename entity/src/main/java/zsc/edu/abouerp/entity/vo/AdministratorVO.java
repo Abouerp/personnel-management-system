@@ -1,6 +1,8 @@
 package zsc.edu.abouerp.entity.vo;
 
 import lombok.Data;
+import zsc.edu.abouerp.entity.domain.PersonnelStatus;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -15,6 +17,13 @@ public class AdministratorVO {
     private String realName;
     private String mobile;
     private String email;
+    private String address;
+    private String number;
+    private String idCard;
+    private String description;
+    private Double wage;
+    private String sex;
+    private PersonnelStatus status;
     private List<Integer> role;
     private Boolean accountNonExpired = true;
     private Boolean accountNonLocked = true;

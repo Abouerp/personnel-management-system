@@ -34,9 +34,6 @@ public class DepartmentController {
         if (departmentVO.getDescription() != null) {
             department.setDescription(departmentVO.getDescription());
         }
-        if (departmentVO.getNumber() != null) {
-            department.setNumber(departmentVO.getNumber());
-        }
         return department;
     }
 

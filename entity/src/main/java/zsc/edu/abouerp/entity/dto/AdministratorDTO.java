@@ -1,6 +1,7 @@
 package zsc.edu.abouerp.entity.dto;
 
 import lombok.Data;
+import zsc.edu.abouerp.entity.domain.PersonnelStatus;
 import zsc.edu.abouerp.entity.domain.Role;
 
 import java.util.Set;
@@ -16,6 +17,13 @@ public class AdministratorDTO {
     private String realName;
     private String mobile;
     private String email;
+    private String address;
+    private String number;
+    private String idCard;
+    private String description;
+    private Double wage;
+    private String sex;
+    private PersonnelStatus status;
     private Set<Role> roles;
     private boolean accountNonExpired;
     private boolean accountNonLocked;

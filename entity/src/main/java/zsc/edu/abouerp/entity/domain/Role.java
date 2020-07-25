@@ -37,7 +37,8 @@ public class Role implements Serializable {
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities = new HashSet<>();
-
+    @ManyToOne
+    private Department department;
     @CreatedBy
     private Integer createBy;
     @LastModifiedBy
