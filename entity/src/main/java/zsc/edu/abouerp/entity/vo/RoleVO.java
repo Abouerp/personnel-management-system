@@ -13,8 +13,8 @@ import java.util.Set;
 public class RoleVO {
 
     private String name;
-
     private String description;
-
+    private Integer departmentId;
+    private Double basicSalary;
     private Set<Authority> authorities = new HashSet<>();
 }

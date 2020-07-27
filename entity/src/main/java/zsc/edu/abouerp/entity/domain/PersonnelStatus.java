@@ -1,17 +1,39 @@
 package zsc.edu.abouerp.entity.domain;
 
+import java.util.EnumMap;
+
 /**
+ * 员工状态
+ *
  * @author Abouerp
  */
 public enum PersonnelStatus {
 
-    TRIAL_RIGHT,
+    PROBATION("试用期"),
 
-    TRIAL_DELAY,
+    IN_OFFICE("转正"),
 
-    IN_OFFICE,
+    UN_OFFICE("不录用"),
 
-    UN_OFFICE,
+    OFF_OFFICE("离职");
 
-    OFF_OFFICE;
+    private final String description;
+
+    public static final EnumMap<PersonnelStatus, String> mappings = new EnumMap<>(PersonnelStatus.class);
+
+    static {
+        for (PersonnelStatus status : values()) {
+            mappings.put(status, status.getDescription());
+        }
+    }
+
+    PersonnelStatus(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
 }

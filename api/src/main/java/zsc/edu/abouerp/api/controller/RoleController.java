@@ -6,10 +6,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import zsc.edu.abouerp.common.entiry.ResultBean;
+import zsc.edu.abouerp.entity.domain.Department;
 import zsc.edu.abouerp.entity.domain.Role;
 import zsc.edu.abouerp.entity.vo.RoleVO;
+import zsc.edu.abouerp.service.exception.DepartmentNotFoundException;
 import zsc.edu.abouerp.service.exception.RoleNotFoundException;
 import zsc.edu.abouerp.service.mapper.RoleMapper;
+import zsc.edu.abouerp.service.service.DepartmentService;
 import zsc.edu.abouerp.service.service.RoleService;
 
 /**
@@ -20,9 +23,12 @@ import zsc.edu.abouerp.service.service.RoleService;
 public class RoleController {
 
     private final RoleService roleService;
+    private final DepartmentService departmentService;
 
-    public RoleController(RoleService roleService) {
+    public RoleController(RoleService roleService,
+                          DepartmentService departmentService) {
         this.roleService = roleService;
+        this.departmentService = departmentService;
     }
 
     private static Role updateInfo(Role role, RoleVO roleVO) {
@@ -35,13 +41,21 @@ public class RoleController {
         if (roleVO != null && roleVO.getAuthorities() != null && !roleVO.getAuthorities().isEmpty()) {
             role.setAuthorities(roleVO.getAuthorities());
         }
+        if (roleVO != null && roleVO.getBasicSalary() != null) {
+            role.setBasicSalary(roleVO.getBasicSalary());
+        }
         return role;
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CREATE')")
     public ResultBean<Role> save(@RequestBody RoleVO roleVO) {
-        return ResultBean.ok(roleService.save(RoleMapper.INSTANCE.toRole(roleVO)));
+        Role role = RoleMapper.INSTANCE.toRole(roleVO);
+        if (roleVO.getDepartmentId() != null) {
+            Department department = departmentService.findById(roleVO.getDepartmentId()).orElseThrow(DepartmentNotFoundException::new);
+            role.setDepartment(department);
+        }
+        return ResultBean.ok(roleService.save(role));
     }
 
     @DeleteMapping("/{id}")
@@ -55,6 +69,10 @@ public class RoleController {
     @PreAuthorize("hasAuthority('ROLE_UPDATE')")
     public ResultBean<Role> update(@PathVariable Integer id, @RequestBody RoleVO roleVO) {
         Role role = roleService.findById(id).orElseThrow(RoleNotFoundException::new);
+        if (roleVO.getDepartmentId() != null) {
+            Department department = departmentService.findById(roleVO.getDepartmentId()).orElseThrow(DepartmentNotFoundException::new);
+            role.setDepartment(department);
+        }
         return ResultBean.ok(roleService.save(updateInfo(role, roleVO)));
     }
 

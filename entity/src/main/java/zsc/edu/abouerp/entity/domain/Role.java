@@ -34,6 +34,10 @@ public class Role implements Serializable {
     private Integer id;
     private String name;
     private String description;
+    /**
+     * 基础薪资
+     */
+    private Double basicSalary;
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities = new HashSet<>();
