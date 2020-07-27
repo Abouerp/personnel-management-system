@@ -56,6 +56,7 @@ public class Administrator implements Serializable {
      */
     private String probationAccess;
     private Instant officeTime;
+    private Title title;
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
     @CreatedBy
