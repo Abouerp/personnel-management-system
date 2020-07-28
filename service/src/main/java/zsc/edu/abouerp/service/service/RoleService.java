@@ -49,8 +49,14 @@ public class RoleService {
         if (roleVO.getName() != null && !roleVO.getName().isEmpty()) {
             booleanBuilder.and(qRole.name.containsIgnoreCase(roleVO.getName()));
         }
-        if (roleVO.getDescription()!=null && !roleVO.getDescription().isEmpty()){
+        if (roleVO.getDescription() != null && !roleVO.getDescription().isEmpty()) {
             booleanBuilder.and(qRole.description.containsIgnoreCase(roleVO.getDescription()));
+        }
+        if (roleVO.getDepartmentId() != null) {
+            booleanBuilder.and(qRole.department.id.eq(roleVO.getDepartmentId()));
+        }
+        if (roleVO.getBasicSalary() != null) {
+            booleanBuilder.and(qRole.basicSalary.between(0, roleVO.getBasicSalary()));
         }
         return roleRepository.findAll(booleanBuilder, pageable);
     }
