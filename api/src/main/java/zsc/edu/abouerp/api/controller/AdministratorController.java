@@ -155,18 +155,18 @@ public class AdministratorController {
                 .collect(Collectors.toSet());
         administratorVO.setPassword(passwordEncoder.encode(administratorVO.getPassword()));
         administrator = AdministratorMapper.INSTANCE.toAdmin(administratorVO);
+        Double wage = 0.0;
+        List<Role> roleList = roles.stream().collect(Collectors.toList());
+        if (roleList != null && roleList.size() > 0) {
+            for (Role role : roleList) {
+                wage += role.getBasicSalary();
+            }
+        }
+        administrator.setWage(wage);
         if (administratorVO != null && administratorVO.getTitleId() != null) {
             Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
             administrator.setTitle(title);
-            Double wage = 0.0;
-            List<Role> roleList = roles.stream().collect(Collectors.toList());
-            if (roleList != null && roleList.size() > 0) {
-                for (Role role : roleList) {
-                    wage += role.getBasicSalary();
-                }
-            }
-            wage += title.getWage();
-            administrator.setWage(wage);
+            administrator.setWage(administrator.getWage()+title.getWage());
         }
         administrator.setRoles(roles);
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator)));
