@@ -55,8 +55,19 @@ public class Administrator implements Serializable {
      * 试用期评价
      */
     private String probationAccess;
-    private Instant officeTime;
+    /**
+     * 转正时间
+     */
+    private Instant offerTime;
+    /**
+     * 职称
+     */
+    @ManyToOne
     private Title title;
+    /**
+     * 照片
+     */
+    private String md5;
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
     @CreatedBy

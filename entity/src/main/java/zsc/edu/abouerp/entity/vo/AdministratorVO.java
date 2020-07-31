@@ -4,6 +4,7 @@ import lombok.Data;
 import zsc.edu.abouerp.entity.domain.PersonnelStatus;
 
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -24,6 +25,10 @@ public class AdministratorVO {
     private Double wage;
     private String sex;
     private PersonnelStatus status;
+    private String probationAccess;
+    private Instant offerTime;
+    private Integer titleId;
+    private String md5;
     private List<Integer> role;
     private Boolean accountNonExpired = true;
     private Boolean accountNonLocked = true;

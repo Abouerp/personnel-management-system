@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import zsc.edu.abouerp.common.entiry.ResultBean;
 import zsc.edu.abouerp.entity.domain.Authority;
+import zsc.edu.abouerp.entity.domain.PersonnelStatus;
 import zsc.edu.abouerp.entity.domain.Role;
 import zsc.edu.abouerp.service.exception.RoleNotFoundException;
 import zsc.edu.abouerp.service.service.RoleService;
@@ -38,5 +39,10 @@ public class AuthorityController {
         Role role = roleService.findById(id).orElseThrow(RoleNotFoundException::new);
         role.setAuthorities(authorities);
         return ResultBean.ok(roleService.save(role));
+    }
+
+    @GetMapping("/personnel-status")
+    public ResultBean<EnumMap<PersonnelStatus,String>> getAdminStatus(){
+        return ResultBean.ok(PersonnelStatus.mappings);
     }
 }

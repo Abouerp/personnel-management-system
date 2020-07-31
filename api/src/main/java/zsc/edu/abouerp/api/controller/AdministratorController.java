@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import zsc.edu.abouerp.common.entiry.ResultBean;
 import zsc.edu.abouerp.entity.domain.Administrator;
 import zsc.edu.abouerp.entity.domain.Role;
+import zsc.edu.abouerp.entity.domain.Title;
 import zsc.edu.abouerp.entity.dto.AdministratorDTO;
 import zsc.edu.abouerp.entity.vo.AdministratorVO;
 import zsc.edu.abouerp.service.exception.ParamErrorException;
+import zsc.edu.abouerp.service.exception.TitleNotFoundException;
 import zsc.edu.abouerp.service.exception.UserNotFoundException;
 import zsc.edu.abouerp.service.exception.UserRepeatException;
 import zsc.edu.abouerp.service.mapper.AdministratorMapper;
@@ -22,9 +24,11 @@ import zsc.edu.abouerp.service.repository.AdministratorRepository;
 import zsc.edu.abouerp.service.security.UserPrincipal;
 import zsc.edu.abouerp.service.service.AdministratorService;
 import zsc.edu.abouerp.service.service.RoleService;
+import zsc.edu.abouerp.service.service.TitleService;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -38,17 +42,20 @@ public class AdministratorController {
 
     private final AdministratorRepository administratorRepository;
     private final RoleService roleService;
+    private final TitleService titleService;
     private final PasswordEncoder passwordEncoder;
     private final AdministratorService administratorService;
 
     public AdministratorController(AdministratorRepository administratorRepository,
                                    RoleService roleService,
                                    PasswordEncoder passwordEncoder,
-                                   AdministratorService administratorService) {
+                                   AdministratorService administratorService,
+                                   TitleService titleService) {
         this.administratorRepository = administratorRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.administratorService = administratorService;
+        this.titleService = titleService;
     }
 
     private static Administrator update(Administrator administrator, AdministratorVO adminVO) {
@@ -61,8 +68,32 @@ public class AdministratorController {
         if (adminVO != null && adminVO.getEnabled() != null) {
             administrator.setEnabled(adminVO.getEnabled());
         }
-        if (adminVO != null && adminVO.getRealName()!=null){
+        if (adminVO != null && adminVO.getRealName() != null) {
             administrator.setRealName(adminVO.getRealName());
+        }
+        if (adminVO != null && adminVO.getAddress() != null) {
+            administrator.setAddress(adminVO.getAddress());
+        }
+        if (adminVO != null && adminVO.getNumber() != null) {
+            administrator.setNumber(adminVO.getNumber());
+        }
+        if (adminVO != null && adminVO.getIdCard() != null) {
+            administrator.setIdCard(adminVO.getIdCard());
+        }
+        if (adminVO != null && adminVO.getDescription() != null) {
+            administrator.setDescription(adminVO.getDescription());
+        }
+        if (adminVO != null && adminVO.getSex() != null) {
+            administrator.setSex(adminVO.getSex());
+        }
+        if (adminVO != null && adminVO.getStatus() != null) {
+            administrator.setStatus(adminVO.getStatus());
+        }
+        if (adminVO != null && adminVO.getProbationAccess() != null) {
+            administrator.setProbationAccess(adminVO.getProbationAccess());
+        }
+        if (adminVO != null && adminVO.getMd5() != null) {
+            administrator.setMd5(adminVO.getMd5());
         }
         return administrator;
     }
@@ -124,6 +155,19 @@ public class AdministratorController {
                 .collect(Collectors.toSet());
         administratorVO.setPassword(passwordEncoder.encode(administratorVO.getPassword()));
         administrator = AdministratorMapper.INSTANCE.toAdmin(administratorVO);
+        if (administratorVO != null && administratorVO.getTitleId() != null) {
+            Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
+            administrator.setTitle(title);
+            Double wage = 0.0;
+            List<Role> roleList = roles.stream().collect(Collectors.toList());
+            if (roleList != null && roleList.size() > 0) {
+                for (Role role : roleList) {
+                    wage += role.getBasicSalary();
+                }
+            }
+            wage += title.getWage();
+            administrator.setWage(wage);
+        }
         administrator.setRoles(roles);
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator)));
     }
@@ -136,6 +180,10 @@ public class AdministratorController {
         Administrator administrator = administratorService.findById(id).orElseThrow(UserNotFoundException::new);
         if (administratorVO != null && administratorVO.getRole() != null && !administratorVO.getRole().isEmpty()) {
             administrator.setRoles(roleService.findByIdIn(administratorVO.getRole()).stream().collect(Collectors.toSet()));
+        }
+        if (administratorVO != null && administratorVO.getTitleId() != null) {
+            Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
+            administrator.setTitle(title);
         }
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(update(administrator, administratorVO))));
     }
