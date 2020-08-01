@@ -60,6 +60,24 @@ public class AdministratorService {
         if (administrator != null && administrator.getMobile() != null && !administrator.getMobile().isEmpty()) {
             booleanBuilder.and(qAdministrator.mobile.containsIgnoreCase(administrator.getMobile()));
         }
+        if (administrator != null && administrator.getNumber() != null && !administrator.getNumber().isEmpty()) {
+            booleanBuilder.and(qAdministrator.number.containsIgnoreCase(administrator.getNumber()));
+        }
+        if (administrator != null && administrator.getAddress() != null && !administrator.getAddress().isEmpty()) {
+            booleanBuilder.and(qAdministrator.address.containsIgnoreCase(administrator.getAddress()));
+        }
+        if (administrator != null && administrator.getIdCard() != null && !administrator.getIdCard().isEmpty()) {
+            booleanBuilder.and(qAdministrator.idCard.containsIgnoreCase(administrator.getIdCard()));
+        }
+        if (administrator != null && administrator.getWage() != null) {
+            booleanBuilder.and(qAdministrator.wage.between(0, administrator.getWage()));
+        }
+        if (administrator != null && administrator.getSex() != null && !administrator.getSex().isEmpty()) {
+            booleanBuilder.and(qAdministrator.sex.containsIgnoreCase(administrator.getSex()));
+        }
+        if (administrator != null && administrator.getStatus() != null) {
+            booleanBuilder.and(qAdministrator.status.eq(administrator.getStatus()));
+        }
         if (administrator != null && administrator.getEnabled() != null) {
             booleanBuilder.and(qAdministrator.enabled.eq(administrator.getEnabled()));
         }
