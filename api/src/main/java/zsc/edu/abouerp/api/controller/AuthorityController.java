@@ -41,8 +41,5 @@ public class AuthorityController {
         return ResultBean.ok(roleService.save(role));
     }
 
-    @GetMapping("/personnel-status")
-    public ResultBean<EnumMap<PersonnelStatus,String>> getAdminStatus(){
-        return ResultBean.ok(PersonnelStatus.mappings);
-    }
+
 }

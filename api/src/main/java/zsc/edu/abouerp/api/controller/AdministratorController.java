@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import zsc.edu.abouerp.common.entiry.ResultBean;
 import zsc.edu.abouerp.entity.domain.Administrator;
+import zsc.edu.abouerp.entity.domain.PersonnelStatus;
 import zsc.edu.abouerp.entity.domain.Role;
 import zsc.edu.abouerp.entity.domain.Title;
 import zsc.edu.abouerp.entity.dto.AdministratorDTO;
@@ -27,10 +28,7 @@ import zsc.edu.abouerp.service.service.RoleService;
 import zsc.edu.abouerp.service.service.TitleService;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -222,4 +220,8 @@ public class AdministratorController {
         }
     }
 
+    @GetMapping("/personnel-status")
+    public ResultBean<EnumMap<PersonnelStatus,String>> getAdminStatus(){
+        return ResultBean.ok(PersonnelStatus.mappings);
+    }
 }
