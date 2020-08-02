@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import zsc.edu.abouerp.entity.domain.Storage;
+import zsc.edu.abouerp.service.exception.StorageFileNotFoundException;
 import zsc.edu.abouerp.service.repository.StorageRepository;
 
 /**
@@ -21,19 +22,18 @@ public class StorageService {
     }
 
     @Transactional
-    public String save(String sha1, MultipartFile file) {
-        Storage storage = new Storage();
+    public void save(String md5, MultipartFile file) {
+        Storage storage = storageRepository.findByMd5(md5).orElse(new Storage());
         storage = storage
-                .setSha1(sha1)
+                .setMd5(md5)
                 .setContentType(file.getContentType())
-                .setOriginalFilename(file.getOriginalFilename());
+                .setOriginalFilename(file.getOriginalFilename())
+                .setCount(storage.getCount()+1);
         log.info("stroage = {}", storage);
         storageRepository.save(storage);
-        return null;
     }
 
-    public Storage findBySHA1(String id) {
-        Storage storage = storageRepository.findBySha1(id).orElse(null);
-        return storage;
+    public Storage findByMD5(String id) {
+        return storageRepository.findByMd5(id).orElseThrow(StorageFileNotFoundException::new);
     }
 }

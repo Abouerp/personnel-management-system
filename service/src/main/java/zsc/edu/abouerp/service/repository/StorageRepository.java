@@ -12,5 +12,5 @@ import java.util.Optional;
 @Repository
 public interface StorageRepository extends JpaRepository<Storage, Integer> {
 
-    Optional<Storage> findBySha1(String sha1);
+    Optional<Storage> findByMd5(String md5);
 }

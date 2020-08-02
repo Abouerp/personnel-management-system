@@ -4,8 +4,10 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 import zsc.edu.abouerp.service.config.StorageProperties;
+import zsc.edu.abouerp.service.exception.StorageFileNotFoundException;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -46,18 +48,15 @@ public class FileStorageService {
     public String upload(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
         if (file.isEmpty()) {
-            return null;
-//            throw new StorageException(String.format("Failed to store empty file, %s", originalFilename));
+            throw new StorageFileNotFoundException();
         }
 
         if (originalFilename != null && originalFilename.contains("..")) {
             // This is a security check
-//            throw new StorageException(String.format("Cannot store file with relative path outside current directory, %s", originalFilename));
-            return null;
+            throw new StorageFileNotFoundException();
         }
-        //拿二进制文件生成一个唯一的名称
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-1");
+            MessageDigest digest = MessageDigest.getInstance("MD5");
             if (originalFilename != null && !originalFilename.isEmpty()) {
                 digest.update(originalFilename.getBytes());
             }
@@ -74,22 +73,21 @@ public class FileStorageService {
                     out.write(buf, 0, n);
                 }
 
-                String sha1 = String.format("%032X", new BigInteger(1, digest.digest()));
-                log.info("sh1 = {}" + sha1);
+                String md5 = String.format("%032X", new BigInteger(1, digest.digest()));
+                log.info("MD5 = {}" + md5);
 
-                Path dest = rootLocation.resolve(sha1);
+                Path dest = rootLocation.resolve(md5);
                 if (dest.toFile().exists()) {
-                    return sha1;
+                    return md5;
                 }
                 Files.move(temp, dest);
-                return sha1;
+                return md5;
             } catch (IOException e) {
-//                throw new StorageException("Failed to store file " + originalFilename, e);
+                throw new StorageFileNotFoundException();
             }
         } catch (IOException | NoSuchAlgorithmException e) {
-//            throw new StorageException("Failed to create temp file ", e);
+            throw new StorageFileNotFoundException();
         }
-        return null;
     }
 
     public Resource findByHash(String hash) {
@@ -98,12 +96,14 @@ public class FileStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                return null;
-//                throw new StorageFileNotFoundException("Could not read file: " + hash);
+                throw new StorageFileNotFoundException();
             }
         } catch (MalformedURLException e) {
-//            throw new StorageFileNotFoundException("Could not read file: " + hash, e);
+            throw new StorageFileNotFoundException();
         }
-        return null;
+    }
+
+    public void delete(String hash) {
+        FileSystemUtils.deleteRecursively(rootLocation.resolve(hash).toFile());
     }
 }

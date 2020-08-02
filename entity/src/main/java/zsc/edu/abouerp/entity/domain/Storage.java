@@ -20,7 +20,8 @@ public class Storage implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String sha1;
+    private String md5;
     private String originalFilename;
     private String contentType;
+    private Integer count = 0;
 }
