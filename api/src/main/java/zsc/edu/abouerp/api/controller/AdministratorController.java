@@ -10,22 +10,15 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import zsc.edu.abouerp.common.entiry.ResultBean;
-import zsc.edu.abouerp.entity.domain.Administrator;
-import zsc.edu.abouerp.entity.domain.PersonnelStatus;
-import zsc.edu.abouerp.entity.domain.Role;
-import zsc.edu.abouerp.entity.domain.Title;
+import zsc.edu.abouerp.entity.domain.*;
 import zsc.edu.abouerp.entity.dto.AdministratorDTO;
 import zsc.edu.abouerp.entity.vo.AdministratorVO;
-import zsc.edu.abouerp.service.exception.ParamErrorException;
-import zsc.edu.abouerp.service.exception.TitleNotFoundException;
-import zsc.edu.abouerp.service.exception.UserNotFoundException;
-import zsc.edu.abouerp.service.exception.UserRepeatException;
+import zsc.edu.abouerp.service.exception.*;
 import zsc.edu.abouerp.service.mapper.AdministratorMapper;
 import zsc.edu.abouerp.service.repository.AdministratorRepository;
+import zsc.edu.abouerp.service.repository.StorageRepository;
 import zsc.edu.abouerp.service.security.UserPrincipal;
-import zsc.edu.abouerp.service.service.AdministratorService;
-import zsc.edu.abouerp.service.service.RoleService;
-import zsc.edu.abouerp.service.service.TitleService;
+import zsc.edu.abouerp.service.service.*;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -43,17 +36,23 @@ public class AdministratorController {
     private final TitleService titleService;
     private final PasswordEncoder passwordEncoder;
     private final AdministratorService administratorService;
+    private final StorageRepository storageRepository;
+    private final FileStorageService fileStorageService;
 
     public AdministratorController(AdministratorRepository administratorRepository,
                                    RoleService roleService,
                                    PasswordEncoder passwordEncoder,
                                    AdministratorService administratorService,
-                                   TitleService titleService) {
+                                   TitleService titleService,
+                                   StorageRepository storageRepository,
+                                   FileStorageService fileStorageService) {
         this.administratorRepository = administratorRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.administratorService = administratorService;
         this.titleService = titleService;
+        this.storageRepository = storageRepository;
+        this.fileStorageService = fileStorageService;
     }
 
     private static Administrator update(Administrator administrator, AdministratorVO adminVO) {
@@ -164,7 +163,7 @@ public class AdministratorController {
         if (administratorVO != null && administratorVO.getTitleId() != null) {
             Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
             administrator.setTitle(title);
-            administrator.setWage(administrator.getWage()+title.getWage());
+            administrator.setWage(administrator.getWage() + title.getWage());
         }
         administrator.setRoles(roles);
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator)));
@@ -189,6 +188,17 @@ public class AdministratorController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('USER_DELETE')")
     public ResultBean delete(@PathVariable Integer id) {
+        Administrator administrator = administratorService.findById(id).orElseThrow(UserNotFoundException::new);
+        if (administrator.getMd5() != null) {
+            Storage storage = storageRepository.findByMd5(administrator.getMd5()).orElseThrow(StorageFileNotFoundException::new);
+            if (storage.getCount() - 1 == 0) {
+                fileStorageService.delete(storage.getMd5());
+                storageRepository.deleteById(storage.getId());
+            } else {
+                storage.setCount(storage.getCount() - 1);
+                storageRepository.save(storage);
+            }
+        }
         administratorService.delete(id);
         return ResultBean.ok();
     }
@@ -221,7 +231,7 @@ public class AdministratorController {
     }
 
     @GetMapping("/personnel-status")
-    public ResultBean<EnumMap<PersonnelStatus,String>> getAdminStatus(){
+    public ResultBean<EnumMap<PersonnelStatus, String>> getAdminStatus() {
         return ResultBean.ok(PersonnelStatus.mappings);
     }
 }
