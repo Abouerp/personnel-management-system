@@ -156,7 +156,9 @@ public class AdministratorController {
         List<Role> roleList = roles.stream().collect(Collectors.toList());
         if (roleList != null && roleList.size() > 0) {
             for (Role role : roleList) {
-                wage += role.getBasicSalary();
+                if (role.getBasicSalary()!=null) {
+                    wage += role.getBasicSalary();
+                }
             }
         }
         administrator.setWage(wage);
