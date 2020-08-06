@@ -36,7 +36,7 @@ public class StorageController {
     public ResultBean<String> save(@RequestParam MultipartFile file) {
         String md5 = fileStorageService.upload(file);
         storageService.save(md5, file);
-        return new ResultBean<>(String.format("/api/storage/preview/%s", md5));
+        return new ResultBean<>(md5);
     }
 
     @GetMapping(value = "/preview/{id}")
