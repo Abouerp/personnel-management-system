@@ -26,6 +26,8 @@ public class AdministratorVO {
     private String sex;
     private PersonnelStatus status;
     private String probationAccess;
+    private Instant probationStartTime;
+    private Instant probationEndTime;
     private Instant offerTime;
     private Integer titleId;
     private String md5;

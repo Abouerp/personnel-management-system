@@ -92,6 +92,12 @@ public class AdministratorController {
         if (adminVO != null && adminVO.getMd5() != null) {
             administrator.setMd5(adminVO.getMd5());
         }
+        if (adminVO != null && adminVO.getProbationStartTime() != null) {
+            administrator.setProbationStartTime(adminVO.getProbationStartTime());
+        }
+        if (adminVO != null && adminVO.getProbationEndTime() != null) {
+            administrator.setProbationEndTime(adminVO.getProbationEndTime());
+        }
         return administrator;
     }
 
@@ -156,7 +162,7 @@ public class AdministratorController {
         List<Role> roleList = roles.stream().collect(Collectors.toList());
         if (roleList != null && roleList.size() > 0) {
             for (Role role : roleList) {
-                if (role.getBasicSalary()!=null) {
+                if (role.getBasicSalary() != null) {
                     wage += role.getBasicSalary();
                 }
             }

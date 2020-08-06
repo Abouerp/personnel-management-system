@@ -27,6 +27,8 @@ public class AdministratorDTO {
     private String sex;
     private PersonnelStatus status;
     private String probationAccess;
+    private Instant probationStartTime;
+    private Instant probationEndTime;
     private Instant offerTime;
     private Title title;
     private String md5;

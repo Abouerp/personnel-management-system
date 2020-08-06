@@ -1,7 +1,6 @@
 package zsc.edu.abouerp.api.controller;
 
 import org.springframework.core.io.Resource;
-import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +10,7 @@ import zsc.edu.abouerp.entity.domain.Storage;
 import zsc.edu.abouerp.service.service.FileStorageService;
 import zsc.edu.abouerp.service.service.StorageService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author Abouerp
