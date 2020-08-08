@@ -17,6 +17,9 @@ public class ProbationMessage implements Serializable {
      * 试用期评价
      */
     private String probationAccess;
+    /**
+     * 开始时间
+     */
     private Instant probationStartTime;
     private Instant probationEndTime;
 }
