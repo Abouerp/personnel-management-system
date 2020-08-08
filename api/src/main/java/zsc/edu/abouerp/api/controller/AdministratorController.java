@@ -1,5 +1,6 @@
 package zsc.edu.abouerp.api.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,12 +22,14 @@ import zsc.edu.abouerp.service.security.UserPrincipal;
 import zsc.edu.abouerp.service.service.*;
 
 import javax.validation.Valid;
+import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author Abouerp
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/user")
 public class AdministratorController {
@@ -89,17 +92,20 @@ public class AdministratorController {
         if (adminVO != null && adminVO.getMd5() != null) {
             administrator.setMd5(adminVO.getMd5());
         }
+        if (adminVO != null && adminVO.getOfferTime() != null) {
+            administrator.setOfferTime(adminVO.getOfferTime());
+        }
         if (adminVO != null && adminVO.getProbationMessage() != null) {
-//            ProbationMessage probationMessage = new ProbationMessage();
-//            if (adminVO.getProbationMessage().getProbationAccess() != null) {
-//                probationMessage.setProbationAccess(adminVO.getProbationMessage().getProbationAccess());
-//            }
-//            if (adminVO.getProbationMessage().getProbationStartTime() != null) {
-//                probationMessage.setProbationStartTime(adminVO.getProbationMessage().getProbationStartTime());
-//            }
-//            if (adminVO.getProbationMessage().getProbationEndTime() != null) {
-//                probationMessage.setProbationEndTime(adminVO.getProbationMessage().getProbationEndTime());
-//            }
+            ProbationMessage probationMessage = new ProbationMessage();
+            if (adminVO.getProbationMessage().getProbationAccess() != null) {
+                probationMessage.setProbationAccess(adminVO.getProbationMessage().getProbationAccess());
+            }
+            if (adminVO.getProbationMessage().getProbationStartTime() != null) {
+                probationMessage.setProbationStartTime(adminVO.getProbationMessage().getProbationStartTime());
+            }
+            if (adminVO.getProbationMessage().getProbationEndTime() != null) {
+                probationMessage.setProbationEndTime(adminVO.getProbationMessage().getProbationEndTime());
+            }
             administrator.setProbationMessage(adminVO.getProbationMessage());
         }
         return administrator;
@@ -245,5 +251,12 @@ public class AdministratorController {
     @GetMapping("/personnel-status")
     public ResultBean<EnumMap<PersonnelStatus, String>> getAdminStatus() {
         return ResultBean.ok(PersonnelStatus.mappings);
+    }
+
+    @GetMapping("/test")
+    public ResultBean test() {
+        Instant now = Instant.now();
+        log.info(String.format("now = {%d}", now.getEpochSecond()));
+        return ResultBean.ok(now);
     }
 }
