@@ -2,6 +2,7 @@ package zsc.edu.abouerp.entity.dto;
 
 import lombok.Data;
 import zsc.edu.abouerp.entity.domain.PersonnelStatus;
+import zsc.edu.abouerp.entity.domain.ProbationMessage;
 import zsc.edu.abouerp.entity.domain.Role;
 import zsc.edu.abouerp.entity.domain.Title;
 
@@ -26,9 +27,7 @@ public class AdministratorDTO {
     private Double wage;
     private String sex;
     private PersonnelStatus status;
-    private String probationAccess;
-    private Instant probationStartTime;
-    private Instant probationEndTime;
+    private ProbationMessage probationMessage;
     private Instant offerTime;
     private Title title;
     private String md5;

@@ -86,17 +86,21 @@ public class AdministratorController {
         if (adminVO != null && adminVO.getStatus() != null) {
             administrator.setStatus(adminVO.getStatus());
         }
-        if (adminVO != null && adminVO.getProbationAccess() != null) {
-            administrator.setProbationAccess(adminVO.getProbationAccess());
-        }
         if (adminVO != null && adminVO.getMd5() != null) {
             administrator.setMd5(adminVO.getMd5());
         }
-        if (adminVO != null && adminVO.getProbationStartTime() != null) {
-            administrator.setProbationStartTime(adminVO.getProbationStartTime());
-        }
-        if (adminVO != null && adminVO.getProbationEndTime() != null) {
-            administrator.setProbationEndTime(adminVO.getProbationEndTime());
+        if (adminVO != null && adminVO.getProbationMessage() != null) {
+//            ProbationMessage probationMessage = new ProbationMessage();
+//            if (adminVO.getProbationMessage().getProbationAccess() != null) {
+//                probationMessage.setProbationAccess(adminVO.getProbationMessage().getProbationAccess());
+//            }
+//            if (adminVO.getProbationMessage().getProbationStartTime() != null) {
+//                probationMessage.setProbationStartTime(adminVO.getProbationMessage().getProbationStartTime());
+//            }
+//            if (adminVO.getProbationMessage().getProbationEndTime() != null) {
+//                probationMessage.setProbationEndTime(adminVO.getProbationMessage().getProbationEndTime());
+//            }
+            administrator.setProbationMessage(adminVO.getProbationMessage());
         }
         return administrator;
     }

@@ -2,6 +2,7 @@ package zsc.edu.abouerp.entity.vo;
 
 import lombok.Data;
 import zsc.edu.abouerp.entity.domain.PersonnelStatus;
+import zsc.edu.abouerp.entity.domain.ProbationMessage;
 
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -25,9 +26,7 @@ public class AdministratorVO {
     private Double wage;
     private String sex;
     private PersonnelStatus status;
-    private String probationAccess;
-    private Instant probationStartTime;
-    private Instant probationEndTime;
+    private ProbationMessage probationMessage;
     private Instant offerTime;
     private Integer titleId;
     private String md5;

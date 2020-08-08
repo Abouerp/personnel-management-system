@@ -51,12 +51,8 @@ public class Administrator implements Serializable {
      * 员工的状态
      */
     private PersonnelStatus status;
-    /**
-     * 试用期评价
-     */
-    private String probationAccess;
-    private Instant probationStartTime;
-    private Instant probationEndTime;
+    @Embedded
+    private ProbationMessage probationMessage;
     /**
      * 转正时间
      */
