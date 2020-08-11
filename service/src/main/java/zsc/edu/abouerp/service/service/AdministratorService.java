@@ -54,6 +54,9 @@ public class AdministratorService {
         if (administrator != null && administrator.getUsername() != null && !administrator.getUsername().isEmpty()) {
             booleanBuilder.and(qAdministrator.username.containsIgnoreCase(administrator.getUsername()));
         }
+        if (administrator != null && administrator.getRealName() != null && !administrator.getRealName().isEmpty()) {
+            booleanBuilder.and(qAdministrator.realName.containsIgnoreCase(administrator.getRealName()));
+        }
         if (administrator != null && administrator.getEmail() != null && !administrator.getEmail().isEmpty()) {
             booleanBuilder.and(qAdministrator.email.containsIgnoreCase(administrator.getEmail()));
         }
