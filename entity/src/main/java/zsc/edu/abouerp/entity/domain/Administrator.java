@@ -65,6 +65,9 @@ public class Administrator implements Serializable {
      */
     @ManyToOne
     private Title title;
+
+    @OneToOne
+    private ResignMessage resignMessage;
     /**
      * 照片
      */
