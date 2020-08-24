@@ -18,6 +18,7 @@ import zsc.edu.abouerp.service.exception.*;
 import zsc.edu.abouerp.service.mapper.AdministratorMapper;
 import zsc.edu.abouerp.service.repository.AdministratorRepository;
 import zsc.edu.abouerp.service.repository.ResignMessageRepository;
+import zsc.edu.abouerp.service.repository.RoleChangeLoggerRepository;
 import zsc.edu.abouerp.service.repository.StorageRepository;
 import zsc.edu.abouerp.service.security.UserPrincipal;
 import zsc.edu.abouerp.service.service.*;
@@ -43,6 +44,7 @@ public class AdministratorController {
     private final StorageRepository storageRepository;
     private final FileStorageService fileStorageService;
     private final ResignMessageRepository resignMessageRepository;
+    private final RoleChangeLoggerRepository roleChangeLoggerRepository;
 
     public AdministratorController(AdministratorRepository administratorRepository,
                                    RoleService roleService,
@@ -51,7 +53,8 @@ public class AdministratorController {
                                    TitleService titleService,
                                    StorageRepository storageRepository,
                                    FileStorageService fileStorageService,
-                                   ResignMessageRepository resignMessageRepository) {
+                                   ResignMessageRepository resignMessageRepository,
+                                   RoleChangeLoggerRepository roleChangeLoggerRepository) {
         this.administratorRepository = administratorRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
@@ -60,6 +63,7 @@ public class AdministratorController {
         this.storageRepository = storageRepository;
         this.fileStorageService = fileStorageService;
         this.resignMessageRepository = resignMessageRepository;
+        this.roleChangeLoggerRepository = roleChangeLoggerRepository;
     }
 
     private static Administrator update(Administrator administrator, AdministratorVO adminVO) {
@@ -112,15 +116,15 @@ public class AdministratorController {
             }
             administrator.setProbationMessage(adminVO.getProbationMessage());
         }
-        if (administrator.getResignMessage()!=null && adminVO.getResignMessage()!=null){
+        if (administrator.getResignMessage() != null && adminVO.getResignMessage() != null) {
             ResignMessage resignMessage = administrator.getResignMessage();
-            if (adminVO.getResignMessage().getResign()!=null){
+            if (adminVO.getResignMessage().getResign() != null) {
                 resignMessage.setResign(adminVO.getResignMessage().getResign());
             }
-            if (adminVO.getResignMessage().getReason()!=null){
+            if (adminVO.getResignMessage().getReason() != null) {
                 resignMessage.setReason(adminVO.getResignMessage().getReason());
             }
-            if (adminVO.getResignMessage().getTime()!=null){
+            if (adminVO.getResignMessage().getTime() != null) {
                 resignMessage.setTime(adminVO.getResignMessage().getTime());
             }
             administrator.setResignMessage(resignMessage);
@@ -227,8 +231,17 @@ public class AdministratorController {
             @PathVariable Integer id,
             @RequestBody AdministratorVO administratorVO) {
         Administrator administrator = administratorService.findById(id).orElseThrow(UserNotFoundException::new);
+        List<Role> roles = administrator.getRoles().stream().collect(Collectors.toList());
         if (administratorVO != null && administratorVO.getRole() != null && !administratorVO.getRole().isEmpty()) {
-            administrator.setRoles(roleService.findByIdIn(administratorVO.getRole()).stream().collect(Collectors.toSet()));
+            List<Role> newRole = roleService.findByIdIn(administratorVO.getRole());
+            RoleChangeLogger roleChangeLogger = new RoleChangeLogger()
+                    .setBeforeRoleId(roles.get(0).getId())
+                    .setBeforeRoleName(roles.get(0).getName())
+                    .setAfterRoleId(newRole.get(0).getId())
+                    .setAfterRoleName(newRole.get(0).getName());
+            roleChangeLoggerRepository.save(roleChangeLogger);
+            administrator.setRoles(newRole.stream().collect(Collectors.toSet()));
+
         }
         if (administratorVO != null && administratorVO.getTitleId() != null) {
             Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
