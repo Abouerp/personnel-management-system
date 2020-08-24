@@ -37,4 +37,5 @@ public class AdministratorVO {
     private Boolean accountNonLocked = true;
     private Boolean credentialsNonExpired = true;
     private Boolean enabled = true;
+    private Boolean resign;
 }
