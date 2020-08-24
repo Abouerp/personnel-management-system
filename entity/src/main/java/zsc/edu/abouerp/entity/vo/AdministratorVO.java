@@ -3,6 +3,7 @@ package zsc.edu.abouerp.entity.vo;
 import lombok.Data;
 import zsc.edu.abouerp.entity.domain.PersonnelStatus;
 import zsc.edu.abouerp.entity.domain.ProbationMessage;
+import zsc.edu.abouerp.entity.domain.ResignMessage;
 
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -30,6 +31,7 @@ public class AdministratorVO {
     private Instant offerTime;
     private Integer titleId;
     private String md5;
+    private ResignMessage resignMessage;
     private List<Integer> role;
     private Boolean accountNonExpired = true;
     private Boolean accountNonLocked = true;

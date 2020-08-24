@@ -1,10 +1,7 @@
 package zsc.edu.abouerp.entity.dto;
 
 import lombok.Data;
-import zsc.edu.abouerp.entity.domain.PersonnelStatus;
-import zsc.edu.abouerp.entity.domain.ProbationMessage;
-import zsc.edu.abouerp.entity.domain.Role;
-import zsc.edu.abouerp.entity.domain.Title;
+import zsc.edu.abouerp.entity.domain.*;
 
 import java.time.Instant;
 import java.util.Set;
@@ -31,6 +28,7 @@ public class AdministratorDTO {
     private Instant offerTime;
     private Title title;
     private String md5;
+    private ResignMessage resignMessage;
     private Set<Role> roles;
     private boolean accountNonExpired;
     private boolean accountNonLocked;

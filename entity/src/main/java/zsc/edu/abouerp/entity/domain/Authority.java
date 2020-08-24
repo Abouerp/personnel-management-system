@@ -9,8 +9,6 @@ import java.util.EnumMap;
  */
 public enum Authority {
 
-    ROLE_USER("角色使用"),
-
     ROLE_CREATE("角色创建"),
     ROLE_READ("角色查看"),
     ROLE_UPDATE("角色更新"),

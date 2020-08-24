@@ -17,6 +17,7 @@ import zsc.edu.abouerp.entity.vo.AdministratorVO;
 import zsc.edu.abouerp.service.exception.*;
 import zsc.edu.abouerp.service.mapper.AdministratorMapper;
 import zsc.edu.abouerp.service.repository.AdministratorRepository;
+import zsc.edu.abouerp.service.repository.ResignMessageRepository;
 import zsc.edu.abouerp.service.repository.StorageRepository;
 import zsc.edu.abouerp.service.security.UserPrincipal;
 import zsc.edu.abouerp.service.service.*;
@@ -41,6 +42,7 @@ public class AdministratorController {
     private final AdministratorService administratorService;
     private final StorageRepository storageRepository;
     private final FileStorageService fileStorageService;
+    private final ResignMessageRepository resignMessageRepository;
 
     public AdministratorController(AdministratorRepository administratorRepository,
                                    RoleService roleService,
@@ -48,7 +50,8 @@ public class AdministratorController {
                                    AdministratorService administratorService,
                                    TitleService titleService,
                                    StorageRepository storageRepository,
-                                   FileStorageService fileStorageService) {
+                                   FileStorageService fileStorageService,
+                                   ResignMessageRepository resignMessageRepository) {
         this.administratorRepository = administratorRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
@@ -56,6 +59,7 @@ public class AdministratorController {
         this.titleService = titleService;
         this.storageRepository = storageRepository;
         this.fileStorageService = fileStorageService;
+        this.resignMessageRepository = resignMessageRepository;
     }
 
     private static Administrator update(Administrator administrator, AdministratorVO adminVO) {
@@ -108,6 +112,19 @@ public class AdministratorController {
             }
             administrator.setProbationMessage(adminVO.getProbationMessage());
         }
+        if (administrator.getResignMessage()!=null && adminVO.getResignMessage()!=null){
+            ResignMessage resignMessage = administrator.getResignMessage();
+            if (adminVO.getResignMessage().getResign()!=null){
+                resignMessage.setResign(adminVO.getResignMessage().getResign());
+            }
+            if (adminVO.getResignMessage().getReason()!=null){
+                resignMessage.setReason(adminVO.getResignMessage().getReason());
+            }
+            if (adminVO.getResignMessage().getTime()!=null){
+                resignMessage.setTime(adminVO.getResignMessage().getTime());
+            }
+            administrator.setResignMessage(resignMessage);
+        }
         return administrator;
     }
 
@@ -150,6 +167,23 @@ public class AdministratorController {
     ) {
         Administrator admin = administratorService.findById(userPrincipal.getId())
                 .orElseThrow(UserNotFoundException::new);
+        if (admin.getResignMessage() == null) {
+            if (adminVO.getResignMessage() != null) {
+                ResignMessage resignMessage = new ResignMessage();
+                if (adminVO.getResignMessage().getTime() != null) {
+                    resignMessage.setTime(adminVO.getResignMessage().getTime());
+                }
+                if (adminVO.getResignMessage().getReason() != null) {
+                    resignMessage.setReason(adminVO.getResignMessage().getReason());
+                }
+                if (adminVO.getResignMessage().getResign() != null) {
+                    resignMessage.setResign(adminVO.getResignMessage().getResign());
+                }
+                resignMessage = resignMessageRepository.save(resignMessage);
+                admin.setResignMessage(resignMessage);
+            }
+        }
+
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(update(admin, adminVO))));
     }
 
