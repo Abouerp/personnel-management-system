@@ -1,4 +1,4 @@
-package zsc.edu.abouerp.service.security.handler;
+package zsc.edu.abouerp.service.security.filter;
 
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
@@ -42,7 +42,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        if (httpServletRequest.equals("/authentication/form") && httpServletRequest.getMethod().equals("post")) {
+        if (httpServletRequest.getRequestURI().equals("/api/user/login") && httpServletRequest.getMethod().equals("POST")) {
             try {
                 validate(new ServletWebRequest(httpServletRequest));
 
