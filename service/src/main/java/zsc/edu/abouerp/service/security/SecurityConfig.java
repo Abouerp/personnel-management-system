@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import zsc.edu.abouerp.service.security.handler.AuthSuccessHandler;
 import zsc.edu.abouerp.service.security.handler.LogoutHandler;
 import zsc.edu.abouerp.service.security.handler.ValidateCodeFilter;
 
@@ -70,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
