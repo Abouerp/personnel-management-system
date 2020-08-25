@@ -253,7 +253,7 @@ public class AdministratorController {
             Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
             administrator.setTitle(title);
         }
-        if (administratorVO != null && administratorVO.getStatus() != null ) {
+        if (administratorVO != null && administratorVO.getStatus() != null) {
             if (administratorVO.getStatus().equals(PersonnelStatus.IN_OFFICE)) {
                 emailService.sendEmail(administrator.getEmail(), "转正啦菜鸟", "嘿嘿嘿");
             }
