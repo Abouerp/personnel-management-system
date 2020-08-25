@@ -50,6 +50,7 @@ public class Administrator implements Serializable {
     /**
      * 员工的状态
      */
+    @Enumerated(EnumType.STRING)
     private PersonnelStatus status;
     /**
      * 试用期信息
