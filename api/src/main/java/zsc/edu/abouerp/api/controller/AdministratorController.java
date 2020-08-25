@@ -45,6 +45,7 @@ public class AdministratorController {
     private final FileStorageService fileStorageService;
     private final ResignMessageRepository resignMessageRepository;
     private final RoleChangeLoggerRepository roleChangeLoggerRepository;
+    private final EmailService emailService;
 
     public AdministratorController(AdministratorRepository administratorRepository,
                                    RoleService roleService,
@@ -54,7 +55,8 @@ public class AdministratorController {
                                    StorageRepository storageRepository,
                                    FileStorageService fileStorageService,
                                    ResignMessageRepository resignMessageRepository,
-                                   RoleChangeLoggerRepository roleChangeLoggerRepository) {
+                                   RoleChangeLoggerRepository roleChangeLoggerRepository,
+                                   EmailService emailService) {
         this.administratorRepository = administratorRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
@@ -64,6 +66,7 @@ public class AdministratorController {
         this.fileStorageService = fileStorageService;
         this.resignMessageRepository = resignMessageRepository;
         this.roleChangeLoggerRepository = roleChangeLoggerRepository;
+        this.emailService = emailService;
     }
 
     private static Administrator update(Administrator administrator, AdministratorVO adminVO) {
@@ -221,8 +224,11 @@ public class AdministratorController {
             administrator.setTitle(title);
             administrator.setWage(administrator.getWage() + title.getWage());
         }
+        administrator.setStatus(PersonnelStatus.PROBATION);
         administrator.setRoles(roles);
-        return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator)));
+        AdministratorDTO administratorDTO = AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator));
+        emailService.sendEmail(administratorDTO.getEmail(), "test", "test");
+        return ResultBean.ok(administratorDTO);
     }
 
     @PutMapping("/{id}")
@@ -246,6 +252,11 @@ public class AdministratorController {
         if (administratorVO != null && administratorVO.getTitleId() != null) {
             Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
             administrator.setTitle(title);
+        }
+        if (administratorVO != null && administratorVO.getStatus() != null ) {
+            if (administratorVO.getStatus().equals(PersonnelStatus.IN_OFFICE)) {
+                emailService.sendEmail(administrator.getEmail(), "test", "test");
+            }
         }
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(update(administrator, administratorVO))));
     }

@@ -10,6 +10,12 @@ spring:
     url: jdbc:mysql://localhost:3306/management_system?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8
     username: root
     password: chenjinjie
+  mail:
+    host: smtp.qq.com
+    username: 1057240821@qq.com
+    password: rdaptnznzeezbfde
+    default-encoding: UTF-8
+    port: 587
 
   jpa:
     generate-ddl: true
@@ -32,3 +38,5 @@ logging:
 
 storage:
   location: f://upload/Downloads/personnel-management/
+email:
+  username: 1057240821@qq.com

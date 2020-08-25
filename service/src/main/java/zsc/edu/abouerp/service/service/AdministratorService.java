@@ -84,7 +84,7 @@ public class AdministratorService {
         if (administrator != null && administrator.getEnabled() != null) {
             booleanBuilder.and(qAdministrator.enabled.eq(administrator.getEnabled()));
         }
-        if (administrator!=null && administrator.getResign()!=null){
+        if (administrator != null && administrator.getResign() != null) {
             booleanBuilder.and(qAdministrator.resignMessage.resign.eq(administrator.getResign()));
         }
         return administratorRepository.findAll(booleanBuilder, pageable);
