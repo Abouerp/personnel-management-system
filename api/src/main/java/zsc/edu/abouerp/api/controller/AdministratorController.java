@@ -227,7 +227,7 @@ public class AdministratorController {
         administrator.setStatus(PersonnelStatus.PROBATION);
         administrator.setRoles(roles);
         AdministratorDTO administratorDTO = AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator));
-        emailService.sendEmail(administratorDTO.getEmail(), "test", "test");
+        emailService.sendEmail(administratorDTO.getEmail(), "收到offer啦菜鸟", "略略略");
         return ResultBean.ok(administratorDTO);
     }
 
@@ -255,7 +255,7 @@ public class AdministratorController {
         }
         if (administratorVO != null && administratorVO.getStatus() != null ) {
             if (administratorVO.getStatus().equals(PersonnelStatus.IN_OFFICE)) {
-                emailService.sendEmail(administrator.getEmail(), "test", "test");
+                emailService.sendEmail(administrator.getEmail(), "转正啦菜鸟", "嘿嘿嘿");
             }
         }
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(update(administrator, administratorVO))));
@@ -311,10 +311,4 @@ public class AdministratorController {
         return ResultBean.ok(PersonnelStatus.mappings);
     }
 
-    @GetMapping("/test")
-    public ResultBean test() {
-        Instant now = Instant.now();
-        log.info(String.format("now = {%d}", now.getEpochSecond()));
-        return ResultBean.ok(now);
-    }
 }
