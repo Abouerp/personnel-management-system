@@ -254,7 +254,7 @@ public class AdministratorController {
             administrator.setTitle(title);
         }
         if (administratorVO != null && administratorVO.getStatus() != null) {
-            if (administratorVO.getStatus().equals(PersonnelStatus.IN_OFFICE)) {
+            if (administratorVO.getStatus().equals(PersonnelStatus.IN_OFFICE) && !administrator.getStatus().equals(PersonnelStatus.IN_OFFICE)) {
                 emailService.sendEmail(administrator.getEmail(), "转正啦菜鸟", "嘿嘿嘿");
             }
         }
