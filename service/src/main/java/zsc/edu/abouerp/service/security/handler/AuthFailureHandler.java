@@ -7,7 +7,9 @@ import org.springframework.security.authentication.InternalAuthenticationService
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import zsc.edu.abouerp.service.exception.ClientErrorException;
+import zsc.edu.abouerp.service.exception.ImageCodeException;
 import zsc.edu.abouerp.service.exception.UnauthorizedException;
+import zsc.edu.abouerp.service.exception.ValidateCodeException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +33,9 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
         ClientErrorException clientErrorException;
         if (exception instanceof InternalAuthenticationServiceException && exception.getCause() instanceof ClientErrorException) {
             clientErrorException = (ClientErrorException) exception.getCause();
-        } else {
+        } else if (exception instanceof ValidateCodeException) {
+            clientErrorException = new ImageCodeException();
+        }else {
             clientErrorException = new UnauthorizedException();
         }
         response.setStatus(clientErrorException.getCode());

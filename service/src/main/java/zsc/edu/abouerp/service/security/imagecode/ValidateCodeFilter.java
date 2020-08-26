@@ -22,6 +22,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     private final AuthenticationFailureHandler authenticationFailureHandler;
     private final StringRedisTemplate stringRedisTemplate;
 
+
     public ValidateCodeFilter(AuthenticationFailureHandler authenticationFailureHandler,
                               StringRedisTemplate stringRedisTemplate) {
         this.authenticationFailureHandler = authenticationFailureHandler;
