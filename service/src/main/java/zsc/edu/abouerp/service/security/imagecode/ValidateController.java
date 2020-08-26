@@ -5,7 +5,6 @@ import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +13,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 // 生成校验码的请求处理器
 @RestController
 public class ValidateController {
 
-    public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
     private final StringRedisTemplate stringRedisTemplate;
 
     public ValidateController(StringRedisTemplate stringRedisTemplate) {
@@ -31,8 +30,8 @@ public class ValidateController {
     @GetMapping("/code/image")
     public void createCode (HttpServletRequest request, HttpServletResponse response) throws IOException {
         ImageCode imageCode = createImage(request);
-        sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
-
+        String code = imageCode.getCode();
+        stringRedisTemplate.opsForValue().set(code,code,300, TimeUnit.SECONDS);
         ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
     }
 

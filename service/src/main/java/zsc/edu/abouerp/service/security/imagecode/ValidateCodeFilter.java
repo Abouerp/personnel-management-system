@@ -1,6 +1,7 @@
 package zsc.edu.abouerp.service.security.imagecode;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
@@ -22,7 +23,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 
     private AuthenticationFailureHandler authenticationFailureHandler;
 
+    private final StringRedisTemplate stringRedisTemplate;
+
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
+
+    public ValidateCodeFilter(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     public AuthenticationFailureHandler getAuthenticationFailureHandler() {
         return authenticationFailureHandler;
@@ -45,7 +52,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         if (httpServletRequest.getRequestURI().equals("/api/user/login") && httpServletRequest.getMethod().equals("POST")) {
             try {
                 validate(new ServletWebRequest(httpServletRequest));
-
             }catch (ValidateCodeException e){
                 authenticationFailureHandler.onAuthenticationFailure(httpServletRequest,httpServletResponse,e);
                 return;
@@ -55,21 +61,17 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     }
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request, ValidateController.SESSION_KEY);
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),"imageCode");
+        String code = stringRedisTemplate.opsForValue().get(codeInRequest);
         if(!StringUtils.hasText(codeInRequest)){
             throw new ValidateCodeException("验证码的值不能为空！");
         }
-        if(codeInSession == null){
+        if(code == null){
             throw new ValidateCodeException("验证码不存在！");
         }
-        if(codeInSession.isExpried()){
-            sessionStrategy.removeAttribute(request,ValidateController.SESSION_KEY);
-            throw new ValidateCodeException("验证码已过期！");
-        }
-        if(!codeInSession.getCode().equals(codeInRequest)){
+        if(!code.equals(codeInRequest)){
             throw new ValidateCodeException("验证码不正确！");
         }
-        sessionStrategy.removeAttribute(request,ValidateController.SESSION_KEY);
+        stringRedisTemplate.delete(code);
     }
 }
