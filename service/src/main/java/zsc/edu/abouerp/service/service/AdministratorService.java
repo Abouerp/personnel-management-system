@@ -99,4 +99,8 @@ public class AdministratorService {
     public void delete(Integer id) {
         administratorRepository.deleteById(id);
     }
+
+    public Administrator getOne(Integer id){
+        return administratorRepository.getOne(id);
+    }
 }

@@ -34,4 +34,8 @@ public class RoleChangeLoggerService {
         }
         return changeLoggerRepository.findAll(booleanBuilder,pageable);
     }
+
+    public RoleChangeLogger save(RoleChangeLogger roleChangeLogger){
+        return changeLoggerRepository.save(roleChangeLogger);
+    }
 }

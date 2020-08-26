@@ -36,36 +36,33 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/user")
 public class AdministratorController {
 
-    private final AdministratorRepository administratorRepository;
     private final RoleService roleService;
     private final TitleService titleService;
     private final PasswordEncoder passwordEncoder;
     private final AdministratorService administratorService;
-    private final StorageRepository storageRepository;
+    private final StorageService storageService;
     private final FileStorageService fileStorageService;
     private final ResignMessageRepository resignMessageRepository;
-    private final RoleChangeLoggerRepository roleChangeLoggerRepository;
+    private final RoleChangeLoggerService roleChangeLoggerService;
     private final EmailService emailService;
 
-    public AdministratorController(AdministratorRepository administratorRepository,
-                                   RoleService roleService,
+    public AdministratorController(RoleService roleService,
                                    PasswordEncoder passwordEncoder,
                                    AdministratorService administratorService,
                                    TitleService titleService,
-                                   StorageRepository storageRepository,
+                                   StorageService storageService,
                                    FileStorageService fileStorageService,
                                    ResignMessageRepository resignMessageRepository,
-                                   RoleChangeLoggerRepository roleChangeLoggerRepository,
+                                   RoleChangeLoggerService roleChangeLoggerService,
                                    EmailService emailService) {
-        this.administratorRepository = administratorRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.administratorService = administratorService;
         this.titleService = titleService;
-        this.storageRepository = storageRepository;
+        this.storageService = storageService;
         this.fileStorageService = fileStorageService;
         this.resignMessageRepository = resignMessageRepository;
-        this.roleChangeLoggerRepository = roleChangeLoggerRepository;
+        this.roleChangeLoggerService = roleChangeLoggerService;
         this.emailService = emailService;
     }
 
@@ -143,7 +140,7 @@ public class AdministratorController {
         Map<String, Object> map = new HashMap<>(2);
         if (object instanceof UserPrincipal) {
             UserPrincipal userPrincipal = (UserPrincipal) object;
-            Administrator administrator = administratorRepository.getOne(userPrincipal.getId());
+            Administrator administrator = administratorService.getOne(userPrincipal.getId());
             map.put("user", AdministratorMapper.INSTANCE.toDTO(administrator));
         } else {
             map.put("user", new AdministratorDTO());
@@ -245,7 +242,7 @@ public class AdministratorController {
                     .setBeforeRoleName(roles.get(0).getName())
                     .setAfterRoleId(newRole.get(0).getId())
                     .setAfterRoleName(newRole.get(0).getName());
-            roleChangeLoggerRepository.save(roleChangeLogger);
+            roleChangeLoggerService.save(roleChangeLogger);
             administrator.setRoles(newRole.stream().collect(Collectors.toSet()));
 
         }
@@ -266,13 +263,13 @@ public class AdministratorController {
     public ResultBean delete(@PathVariable Integer id) {
         Administrator administrator = administratorService.findById(id).orElseThrow(UserNotFoundException::new);
         if (administrator.getMd5() != null) {
-            Storage storage = storageRepository.findByMd5(administrator.getMd5()).orElseThrow(StorageFileNotFoundException::new);
+            Storage storage = storageService.findByMD5(administrator.getMd5());
             if (storage.getCount() - 1 == 0) {
                 fileStorageService.delete(storage.getMd5());
-                storageRepository.deleteById(storage.getId());
+                storageService.deleteById(storage.getId());
             } else {
                 storage.setCount(storage.getCount() - 1);
-                storageRepository.save(storage);
+                storageService.save(storage);
             }
         }
         administratorService.delete(id);
