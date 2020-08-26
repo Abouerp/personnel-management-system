@@ -1,11 +1,10 @@
-package zsc.edu.abouerp.service.security.controller;
+package zsc.edu.abouerp.service.security.imagecode;
 
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
-import zsc.edu.abouerp.service.security.validate.ImageCode;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
