@@ -13,6 +13,14 @@ services:
       - ./deploy/resources/application.yml:/app/resources/application.yml:ro
     restart: always
 
+  redis:
+    image: redis:alpine
+    networks:
+      - personnel-management
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - personnel_management_redis_data:/data
+
   mysql:
     image: mysql
     networks:
@@ -31,5 +39,7 @@ networks:
 
 volumes:
   personnel_management_mysql_data:
+    external: true
+  personnel_management_redie_data:
     external: true
 

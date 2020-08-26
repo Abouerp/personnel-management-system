@@ -13,6 +13,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
     runtimeOnly 'mysql:mysql-connector-java'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     annotationProcessor 'com.querydsl:querydsl-apt:4.2.1:jpa'

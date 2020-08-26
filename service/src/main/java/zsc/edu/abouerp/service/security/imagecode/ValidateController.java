@@ -1,5 +1,6 @@
 package zsc.edu.abouerp.service.security.imagecode;
 
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,11 @@ import java.util.Random;
 public class ValidateController {
 
     public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
+    private final StringRedisTemplate stringRedisTemplate;
+
+    public ValidateController(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
@@ -26,6 +32,7 @@ public class ValidateController {
     public void createCode (HttpServletRequest request, HttpServletResponse response) throws IOException {
         ImageCode imageCode = createImage(request);
         sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
+
         ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
     }
 

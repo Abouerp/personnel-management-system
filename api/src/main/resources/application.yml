@@ -10,6 +10,10 @@ spring:
     url: jdbc:mysql://localhost:3306/management_system?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8
     username: root
     password: chenjinjie
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
   mail:
     host: smtp.qq.com
     username: 1057240821@qq.com
