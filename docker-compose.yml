@@ -6,7 +6,7 @@ services:
       - personnel-management
     depends_on:
       - mysql
-#      - redis
+      - redis
     ports:
       - 3333:9090
     volumes:
@@ -14,14 +14,14 @@ services:
       - ./deploy/resources/application.yml:/app/resources/application.yml:ro
     restart: always
 
-#  redis:
-#    image: redis
-#    networks:
-#      - personnel-management
-#    volumes:
-#      - /etc/localtime:/etc/localtime:ro
-#      - personnel_management_redis_data:/data
-#    restart: always
+  redis:
+    image: redis
+    networks:
+      - personnel-management
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - personnel_management_redis_data:/data
+    restart: always
 
   mysql:
     image: mysql
@@ -41,6 +41,8 @@ networks:
 
 volumes:
   personnel_management_mysql_data:
+    external: true
+  personnel_management_redis_data:
     external: true
 
 
