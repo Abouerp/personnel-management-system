@@ -23,7 +23,7 @@ spring:
     open-in-view: true
   redis:
     database: 0
-    host: redis://redis:6379
+    host: redis:6379
   mail:
     host: smtp.qq.com
     username: 1057240821@qq.com
