@@ -14,7 +14,7 @@ services:
     restart: always
 
   redis:
-    image: redis:alpine
+    image: redis
     networks:
       - personnel-management
     volumes:
