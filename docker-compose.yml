@@ -19,7 +19,7 @@ services:
     networks:
       - personnel-management
     volumes:
-      - /etc/localtime:/etc/localtime:ro
+      - /etc/localtime:/etc/localtime:rw
       - personnel_management_redis_data:/data
 
   mysql:
