@@ -3,8 +3,6 @@ package zsc.edu.abouerp.service.security.imagecode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.social.connect.web.HttpSessionSessionStrategy;
-import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -21,30 +19,13 @@ import java.io.IOException;
 @Slf4j
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
-    private AuthenticationFailureHandler authenticationFailureHandler;
-
+    private final AuthenticationFailureHandler authenticationFailureHandler;
     private final StringRedisTemplate stringRedisTemplate;
 
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
-
-    public ValidateCodeFilter(StringRedisTemplate stringRedisTemplate) {
-        this.stringRedisTemplate = stringRedisTemplate;
-    }
-
-    public AuthenticationFailureHandler getAuthenticationFailureHandler() {
-        return authenticationFailureHandler;
-    }
-
-    public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
+    public ValidateCodeFilter(AuthenticationFailureHandler authenticationFailureHandler,
+                              StringRedisTemplate stringRedisTemplate) {
         this.authenticationFailureHandler = authenticationFailureHandler;
-    }
-
-    public SessionStrategy getSessionStrategy() {
-        return sessionStrategy;
-    }
-
-    public void setSessionStrategy(SessionStrategy sessionStrategy) {
-        this.sessionStrategy = sessionStrategy;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     @Override

@@ -47,8 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter(stringRedisTemplate);
-        validateCodeFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter(authenticationFailureHandler,stringRedisTemplate);
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
         http
                 .formLogin()
