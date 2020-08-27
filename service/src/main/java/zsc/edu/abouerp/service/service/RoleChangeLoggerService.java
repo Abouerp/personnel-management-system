@@ -5,9 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import zsc.edu.abouerp.entity.domain.Department;
 import zsc.edu.abouerp.entity.domain.QRoleChangeLogger;
 import zsc.edu.abouerp.entity.domain.RoleChangeLogger;
 import zsc.edu.abouerp.service.repository.RoleChangeLoggerRepository;
+
+import java.util.List;
 
 /**
  * @author Abouerp
@@ -26,6 +29,9 @@ public class RoleChangeLoggerService {
         }
         QRoleChangeLogger qRoleChangeLogger = QRoleChangeLogger.roleChangeLogger;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
+        if (changeLogger.getRealName()!=null && !changeLogger.getRealName().isEmpty()){
+            booleanBuilder.and(qRoleChangeLogger.realName.containsIgnoreCase(changeLogger.getRealName()));
+        }
         if (changeLogger.getBeforeRoleName()!=null && !changeLogger.getBeforeRoleName().isEmpty() ){
             booleanBuilder.and(qRoleChangeLogger.beforeRoleName.containsIgnoreCase(changeLogger.getBeforeRoleName()));
         }
@@ -37,5 +43,9 @@ public class RoleChangeLoggerService {
 
     public RoleChangeLogger save(RoleChangeLogger roleChangeLogger){
         return changeLoggerRepository.save(roleChangeLogger);
+    }
+
+    public List<Department> findByBeforeDepartmentId(Integer id){
+        return changeLoggerRepository.findByBeforeDepartmentId(id);
     }
 }

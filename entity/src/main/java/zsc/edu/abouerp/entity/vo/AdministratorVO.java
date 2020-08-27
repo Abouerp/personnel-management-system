@@ -38,4 +38,7 @@ public class AdministratorVO {
     private Boolean credentialsNonExpired = true;
     private Boolean enabled = true;
     private Boolean resign;
+    private Instant startTime;
+    private Instant endTime;
+    private Integer departmentId;
 }

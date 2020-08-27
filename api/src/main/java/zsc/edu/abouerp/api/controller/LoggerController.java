@@ -14,7 +14,7 @@ import zsc.edu.abouerp.service.service.RoleChangeLoggerService;
  * @author Abouerp
  */
 @RestController
-@RequestMapping("/logger")
+@RequestMapping("/api/logger")
 public class LoggerController {
 
     private final RoleChangeLoggerService roleChangeLoggerService;
