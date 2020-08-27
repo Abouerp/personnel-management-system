@@ -33,7 +33,7 @@ public class CountController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/counts")
+    @GetMapping("/out-in-department")
     public ResultBean<List<DepartmentStatisticsDTO>> countByDepartment(Instant startTime, Instant endTime) {
         List<DepartmentStatisticsDTO> departmentStatisticsDTOS = new ArrayList<>();
         List<Department> departments = departmentService.findAll();
