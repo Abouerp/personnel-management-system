@@ -34,7 +34,7 @@ public class CountController {
     }
 
     @GetMapping("/counts")
-    public ResultBean countByDepartment(Instant startTime, Instant endTime) {
+    public ResultBean<List<DepartmentStatisticsDTO>> countByDepartment(Instant startTime, Instant endTime) {
         List<DepartmentStatisticsDTO> departmentStatisticsDTOS = new ArrayList<>();
         List<Department> departments = departmentService.findAll();
         for (Department department : departments) {
@@ -46,6 +46,6 @@ public class CountController {
                     .setInPerson(inPerson);
             departmentStatisticsDTOS.add(departmentStatisticsDTO);
         }
-        return ResultBean.ok();
+        return ResultBean.ok(departmentStatisticsDTOS);
     }
 }
