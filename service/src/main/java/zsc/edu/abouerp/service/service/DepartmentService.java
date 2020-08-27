@@ -1,6 +1,7 @@
 package zsc.edu.abouerp.service.service;
 
 import com.querydsl.core.BooleanBuilder;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import zsc.edu.abouerp.entity.domain.QDepartment;
 import zsc.edu.abouerp.entity.vo.DepartmentVO;
 import zsc.edu.abouerp.service.repository.DepartmentRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,5 +47,8 @@ public class DepartmentService {
             booleanBuilder.and(qDepartment.description.containsIgnoreCase(departmentVO.getDescription()));
         }
         return departmentRepository.findAll(booleanBuilder, pageable);
+    }
+    public List<Department> findAll(){
+        return departmentRepository.findAll();
     }
 }

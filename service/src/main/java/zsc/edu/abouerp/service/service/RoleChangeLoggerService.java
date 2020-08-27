@@ -5,13 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import zsc.edu.abouerp.entity.domain.Department;
 import zsc.edu.abouerp.entity.domain.QRoleChangeLogger;
 import zsc.edu.abouerp.entity.domain.RoleChangeLogger;
 import zsc.edu.abouerp.service.repository.RoleChangeLoggerRepository;
 
-import java.util.List;
-
+import java.time.Instant;
 /**
  * @author Abouerp
  */
@@ -45,7 +43,17 @@ public class RoleChangeLoggerService {
         return changeLoggerRepository.save(roleChangeLogger);
     }
 
-    public List<Department> findByBeforeDepartmentId(Integer id){
-        return changeLoggerRepository.findByBeforeDepartmentId(id);
+    public long findByBeforeDepartmentId(Integer id, Instant startTime, Instant endTime){
+        //查找离开此部门的人
+        return changeLoggerRepository.findByBeforeDepartmentId(id) .stream().filter(it -> it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
+                it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
+                .count();
+    }
+
+    public long findByAfterDepartmentId(Integer id,Instant startTime, Instant endTime){
+        //查找调入此部门的人
+        return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(it -> it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
+                it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
+                .count();
     }
 }
