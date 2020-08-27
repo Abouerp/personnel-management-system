@@ -114,13 +114,13 @@ public class AdministratorService {
     }
 
     public Integer countByDepartment(Instant startTime, Instant endTime, Integer departmentId){
-        Instant.ofEpochMilli()new Date(2020,8,20,15,00,00).getTime();
+//        Instant.ofEpochMilli()new Date(2020,8,20,15,00,00).getTime();
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QAdministrator qAdministrator = QAdministrator.administrator;
-        booleanBuilder.and(qAdministrator.roles.any().department.id.eq(departmentId);
-        booleanBuilder.and(qAdministrator.probationMessage.probationStartTime.between(startTime,endTime);
+        booleanBuilder.and(qAdministrator.roles.any().department.id.eq(departmentId));
+        booleanBuilder.and(qAdministrator.probationMessage.probationStartTime.between(startTime,endTime));
 
-
+        return null;
     }
 }
