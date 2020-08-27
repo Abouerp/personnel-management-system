@@ -16,15 +16,11 @@ import zsc.edu.abouerp.entity.dto.AdministratorDTO;
 import zsc.edu.abouerp.entity.vo.AdministratorVO;
 import zsc.edu.abouerp.service.exception.*;
 import zsc.edu.abouerp.service.mapper.AdministratorMapper;
-import zsc.edu.abouerp.service.repository.AdministratorRepository;
 import zsc.edu.abouerp.service.repository.ResignMessageRepository;
-import zsc.edu.abouerp.service.repository.RoleChangeLoggerRepository;
-import zsc.edu.abouerp.service.repository.StorageRepository;
 import zsc.edu.abouerp.service.security.UserPrincipal;
 import zsc.edu.abouerp.service.service.*;
 
 import javax.validation.Valid;
-import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -187,7 +183,9 @@ public class AdministratorController {
                 admin.setResignMessage(resignMessage);
             }
         }
-
+        if (adminVO.getPassword()!=null){
+            admin.setPassword(passwordEncoder.encode(adminVO.getPassword()));
+        }
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(update(admin, adminVO))));
     }
 
@@ -241,7 +239,11 @@ public class AdministratorController {
                     .setBeforeRoleId(roles.get(0).getId())
                     .setBeforeRoleName(roles.get(0).getName())
                     .setAfterRoleId(newRole.get(0).getId())
-                    .setAfterRoleName(newRole.get(0).getName());
+                    .setAfterRoleName(newRole.get(0).getName())
+                    .setBeforeDepartmentId(roles.get(0).getDepartment().getId())
+                    .setAfterDepartmentId(newRole.get(0).getDepartment().getId())
+                    .setRealName(administrator.getRealName());
+
             roleChangeLoggerService.save(roleChangeLogger);
             administrator.setRoles(newRole.stream().collect(Collectors.toSet()));
 
