@@ -223,6 +223,14 @@ public class AdministratorController {
         administrator.setRoles(roles);
         AdministratorDTO administratorDTO = AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator));
         emailService.sendEmail(administratorDTO.getEmail(), "收到offer啦菜鸟", "略略略");
+        RoleChangeLogger roleChangeLogger = new RoleChangeLogger()
+                .setRealName(administratorDTO.getRealName())
+                .setAdministratorId(administratorDTO.getId())
+                .setAfterDepartmentId(roleList.get(0).getDepartment().getId())
+                .setAfterDepartmentName(roleList.get(0).getDepartment().getName())
+                .setAfterRoleId(roleList.get(0).getId())
+                .setAfterRoleName(roleList.get(0).getName());
+        roleChangeLoggerService.save(roleChangeLogger);
         return ResultBean.ok(administratorDTO);
     }
 
@@ -236,12 +244,15 @@ public class AdministratorController {
         if (administratorVO != null && administratorVO.getRole() != null && !administratorVO.getRole().isEmpty()) {
             List<Role> newRole = roleService.findByIdIn(administratorVO.getRole());
             RoleChangeLogger roleChangeLogger = new RoleChangeLogger()
+                    .setAdministratorId(administrator.getId())
                     .setBeforeRoleId(roles.get(0).getId())
                     .setBeforeRoleName(roles.get(0).getName())
                     .setAfterRoleId(newRole.get(0).getId())
                     .setAfterRoleName(newRole.get(0).getName())
                     .setBeforeDepartmentId(roles.get(0).getDepartment().getId())
+                    .setBeforeDepartmentName(roles.get(0).getDepartment().getName())
                     .setAfterDepartmentId(newRole.get(0).getDepartment().getId())
+                    .setAfterDepartmentName(newRole.get(0).getDepartment().getName())
                     .setRealName(administrator.getRealName());
 
             roleChangeLoggerService.save(roleChangeLogger);

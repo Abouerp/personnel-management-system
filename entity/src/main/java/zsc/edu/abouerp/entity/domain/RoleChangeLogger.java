@@ -29,9 +29,13 @@ public class RoleChangeLogger implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer administratorId;
     private String realName;
     private Integer beforeDepartmentId;
+    private String beforeDepartmentName;
     private Integer afterDepartmentId;
+    private String afterDepartmentName;
+
     private Integer beforeRoleId;
     private String beforeRoleName;
     private Integer afterRoleId;
