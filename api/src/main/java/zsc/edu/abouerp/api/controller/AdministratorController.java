@@ -229,7 +229,11 @@ public class AdministratorController {
                 .setAfterDepartmentId(roleList.get(0).getDepartment().getId())
                 .setAfterDepartmentName(roleList.get(0).getDepartment().getName())
                 .setAfterRoleId(roleList.get(0).getId())
-                .setAfterRoleName(roleList.get(0).getName());
+                .setAfterRoleName(roleList.get(0).getName())
+                .setBeforeRoleId(roleList.get(0).getId())
+                .setBeforeRoleName(roleList.get(0).getName())
+                .setBeforeDepartmentId(roleList.get(0).getDepartment().getId())
+                .setBeforeDepartmentName(roleList.get(0).getDepartment().getName());
         roleChangeLoggerService.save(roleChangeLogger);
         return ResultBean.ok(administratorDTO);
     }
@@ -273,6 +277,10 @@ public class AdministratorController {
                         .setBeforeDepartmentName(roles.get(0).getDepartment().getName())
                         .setBeforeRoleId(roles.get(0).getId())
                         .setBeforeRoleName(roles.get(0).getName())
+                        .setAfterDepartmentId(roles.get(0).getDepartment().getId())
+                        .setAfterDepartmentName(roles.get(0).getDepartment().getName())
+                        .setAfterRoleId(roles.get(0).getId())
+                        .setAfterRoleName(roles.get(0).getName())
                         .setResign(true);
                 roleChangeLoggerService.save(roleChangeLogger);
             }

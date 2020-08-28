@@ -55,19 +55,23 @@ public class RoleChangeLoggerService {
     public long findByAfterDepartmentId(Integer id, Instant startTime, Instant endTime) {
         //查找调入此部门的人
         return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(
-                it -> it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
+                it -> it.getResign() == false &&
+                        it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
                         it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
                 .count();
     }
 
     public long findByInDepartment(Integer id, Instant startTime, Instant endTime) {
+        //部门新近人数
         return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(it -> it.getBeforeDepartmentId() == null &&
+                it.getResign() == false &&
                 it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
                 it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
                 .count();
     }
 
     public long findByOutDepartment(Integer id, Instant startTime, Instant endTime) {
+        //部门离职人数
         return changeLoggerRepository.findByBeforeDepartmentId(id).stream().filter(it -> it.getResign() == true &&
                 it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
                 it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
