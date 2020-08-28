@@ -49,7 +49,7 @@ public class CountController {
         return ResultBean.ok(departmentStatisticsDTOS);
     }
 
-    @GetMapping("/dss")
+    @GetMapping("/entry-resign")
     public ResultBean<List<DepartmentStatisticsDTO>> out_in_offerDepartment(Instant startTime, Instant endTime){
         List<DepartmentStatisticsDTO> departmentStatisticsDTOS = new ArrayList<>();
         List<Department> departments = departmentService.findAll();
