@@ -88,13 +88,6 @@ public class AdministratorService {
         if (administrator != null && administrator.getResign() != null) {
             booleanBuilder.and(qAdministrator.resignMessage.resign.eq(administrator.getResign()));
         }
-        if (administrator != null && administrator.getDepartmentId() != null) {
-//        qAdministrator.roles.any().department.id.eq(1);
-            booleanBuilder.and(qAdministrator.roles.any().department.id.eq(administrator.getDepartmentId()));
-        }
-        if (administrator != null && administrator.getStartTime() != null) {
-            booleanBuilder.and(qAdministrator.probationMessage.probationStartTime.between(administrator.getStartTime(), administrator.getEndTime()));
-        }
         return administratorRepository.findAll(booleanBuilder, pageable);
     }
 
@@ -113,8 +106,6 @@ public class AdministratorService {
     }
 
     public Integer countByDepartment(Instant startTime, Instant endTime, Integer departmentId) {
-//        Instant.ofEpochMilli()new Date(2020,8,20,15,00,00).getTime();
-
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QAdministrator qAdministrator = QAdministrator.administrator;
         booleanBuilder.and(qAdministrator.roles.any().department.id.eq(departmentId));

@@ -48,4 +48,19 @@ public class CountController {
         }
         return ResultBean.ok(departmentStatisticsDTOS);
     }
+
+    @GetMapping("/dss")
+    public ResultBean<List<DepartmentStatisticsDTO>> out_in_offerDepartment(Instant startTime, Instant endTime){
+        List<DepartmentStatisticsDTO> departmentStatisticsDTOS = new ArrayList<>();
+        List<Department> departments = departmentService.findAll();
+        for (Department department : departments) {
+            long inPerson = roleChangeLoggerService.findByInDepartment(department.getId(), startTime, endTime);
+            long outPerson = roleChangeLoggerService.findByOutDepartment(department.getId(),startTime, endTime);
+            departmentStatisticsDTOS.add(
+                    new DepartmentStatisticsDTO()
+                            .setDepartmentName(department.getName())
+                            .setInPerson(inPerson).setOutPerson(outPerson));
+        }
+        return ResultBean.ok(departmentStatisticsDTOS);
+    }
 }

@@ -10,6 +10,7 @@ import zsc.edu.abouerp.entity.domain.RoleChangeLogger;
 import zsc.edu.abouerp.service.repository.RoleChangeLoggerRepository;
 
 import java.time.Instant;
+
 /**
  * @author Abouerp
  */
@@ -21,38 +22,54 @@ public class RoleChangeLoggerService {
         this.changeLoggerRepository = changeLoggerRepository;
     }
 
-    public Page<RoleChangeLogger> findAll(Pageable pageable, RoleChangeLogger changeLogger){
-        if (changeLogger == null){
+    public Page<RoleChangeLogger> findAll(Pageable pageable, RoleChangeLogger changeLogger) {
+        if (changeLogger == null) {
             return changeLoggerRepository.findAll(pageable);
         }
         QRoleChangeLogger qRoleChangeLogger = QRoleChangeLogger.roleChangeLogger;
         BooleanBuilder booleanBuilder = new BooleanBuilder();
-        if (changeLogger.getRealName()!=null && !changeLogger.getRealName().isEmpty()){
+        if (changeLogger.getRealName() != null && !changeLogger.getRealName().isEmpty()) {
             booleanBuilder.and(qRoleChangeLogger.realName.containsIgnoreCase(changeLogger.getRealName()));
         }
-        if (changeLogger.getBeforeRoleName()!=null && !changeLogger.getBeforeRoleName().isEmpty() ){
+        if (changeLogger.getBeforeRoleName() != null && !changeLogger.getBeforeRoleName().isEmpty()) {
             booleanBuilder.and(qRoleChangeLogger.beforeRoleName.containsIgnoreCase(changeLogger.getBeforeRoleName()));
         }
-        if (changeLogger.getAfterRoleName()!=null && !changeLogger.getAfterRoleName().isEmpty()){
+        if (changeLogger.getAfterRoleName() != null && !changeLogger.getAfterRoleName().isEmpty()) {
             booleanBuilder.and((qRoleChangeLogger.afterRoleName.containsIgnoreCase(changeLogger.getAfterRoleName())));
         }
-        return changeLoggerRepository.findAll(booleanBuilder,pageable);
+        return changeLoggerRepository.findAll(booleanBuilder, pageable);
     }
 
-    public RoleChangeLogger save(RoleChangeLogger roleChangeLogger){
+    public RoleChangeLogger save(RoleChangeLogger roleChangeLogger) {
         return changeLoggerRepository.save(roleChangeLogger);
     }
 
-    public long findByBeforeDepartmentId(Integer id, Instant startTime, Instant endTime){
+    public long findByBeforeDepartmentId(Integer id, Instant startTime, Instant endTime) {
         //查找离开此部门的人
-        return changeLoggerRepository.findByBeforeDepartmentId(id) .stream().filter(it -> it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
+        return changeLoggerRepository.findByBeforeDepartmentId(id).stream().filter(
+                it -> it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
+                        it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
+                .count();
+    }
+
+    public long findByAfterDepartmentId(Integer id, Instant startTime, Instant endTime) {
+        //查找调入此部门的人
+        return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(
+                it -> it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
+                        it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
+                .count();
+    }
+
+    public long findByInDepartment(Integer id, Instant startTime, Instant endTime) {
+        return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(it -> it.getBeforeDepartmentId() == null &&
+                it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
                 it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
                 .count();
     }
 
-    public long findByAfterDepartmentId(Integer id,Instant startTime, Instant endTime){
-        //查找调入此部门的人
-        return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(it -> it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
+    public long findByOutDepartment(Integer id, Instant startTime, Instant endTime) {
+        return changeLoggerRepository.findByBeforeDepartmentId(id).stream().filter(it -> it.getResign() == true &&
+                it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
                 it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
                 .count();
     }

@@ -40,6 +40,8 @@ public class RoleChangeLogger implements Serializable {
     private String beforeRoleName;
     private Integer afterRoleId;
     private String afterRoleName;
+
+    private Boolean resign = false;
     @CreatedBy
     private Integer createBy;
     @LastModifiedBy
