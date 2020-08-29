@@ -1,5 +1,6 @@
 package zsc.edu.abouerp.api.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * @author Abouerp
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/count")
 public class CountController {
@@ -33,6 +35,12 @@ public class CountController {
         this.departmentService = departmentService;
     }
 
+    /**
+     * 统计部门调入调出人数
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @GetMapping("/out-in-department")
     public ResultBean<List<DepartmentStatisticsDTO>> countByDepartment(Instant startTime, Instant endTime) {
         List<DepartmentStatisticsDTO> departmentStatisticsDTOS = new ArrayList<>();
@@ -49,6 +57,12 @@ public class CountController {
         return ResultBean.ok(departmentStatisticsDTOS);
     }
 
+    /**
+     * 统计部门入职离职人数
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @GetMapping("/entry-resign")
     public ResultBean<List<DepartmentStatisticsDTO>> out_in_offerDepartment(Instant startTime, Instant endTime){
         List<DepartmentStatisticsDTO> departmentStatisticsDTOS = new ArrayList<>();
@@ -62,5 +76,18 @@ public class CountController {
                             .setInPerson(inPerson).setOutPerson(outPerson));
         }
         return ResultBean.ok(departmentStatisticsDTOS);
+    }
+
+    @GetMapping("/shabi")
+    public ResultBean sss(){
+        List<Department> departmentList = departmentService.findAll();
+        for (Department department : departmentList){
+            long number1 = administratorService.countByDepartment(department.getId(), "初级").stream().count();
+            long number2 = administratorService.countByDepartment(department.getId(),"中级").stream().count();
+            long number3 = administratorService.countByDepartment(department.getId(),"高级").stream().count();
+            log.info("------------------------------------------------------------------------");
+            log.info(String.format(department.getName()+number1+"    "+number2+"    "+number3));
+        }
+        return ResultBean.ok();
     }
 }

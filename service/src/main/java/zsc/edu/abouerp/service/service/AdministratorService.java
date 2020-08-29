@@ -11,7 +11,6 @@ import zsc.edu.abouerp.entity.vo.AdministratorVO;
 import zsc.edu.abouerp.service.repository.AdministratorRepository;
 import zsc.edu.abouerp.service.repository.RoleRepository;
 
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -105,12 +104,11 @@ public class AdministratorService {
         return administratorRepository.getOne(id);
     }
 
-    public Integer countByDepartment(Instant startTime, Instant endTime, Integer departmentId) {
+    public List<Administrator> countByDepartment(Integer departmentId, String rank) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QAdministrator qAdministrator = QAdministrator.administrator;
         booleanBuilder.and(qAdministrator.roles.any().department.id.eq(departmentId));
-        booleanBuilder.and(qAdministrator.probationMessage.probationStartTime.between(startTime, endTime));
-
-        return null;
+        booleanBuilder.and(qAdministrator.title.rank.containsIgnoreCase(rank));
+        return (List<Administrator>)administratorRepository.findAll(booleanBuilder);
     }
 }

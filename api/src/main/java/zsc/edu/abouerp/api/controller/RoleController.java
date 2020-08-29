@@ -52,7 +52,8 @@ public class RoleController {
     public ResultBean<Role> save(@RequestBody RoleVO roleVO) {
         Role role = RoleMapper.INSTANCE.toRole(roleVO);
         if (roleVO.getDepartmentId() != null) {
-            Department department = departmentService.findById(roleVO.getDepartmentId()).orElseThrow(DepartmentNotFoundException::new);
+            Department department = departmentService.findById(roleVO.getDepartmentId())
+                    .orElseThrow(DepartmentNotFoundException::new);
             role.setDepartment(department);
         }
         return ResultBean.ok(roleService.save(role));
@@ -70,7 +71,8 @@ public class RoleController {
     public ResultBean<Role> update(@PathVariable Integer id, @RequestBody RoleVO roleVO) {
         Role role = roleService.findById(id).orElseThrow(RoleNotFoundException::new);
         if (roleVO.getDepartmentId() != null) {
-            Department department = departmentService.findById(roleVO.getDepartmentId()).orElseThrow(DepartmentNotFoundException::new);
+            Department department = departmentService.findById(roleVO.getDepartmentId())
+                    .orElseThrow(DepartmentNotFoundException::new);
             role.setDepartment(department);
         }
         return ResultBean.ok(roleService.save(updateInfo(role, roleVO)));
