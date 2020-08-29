@@ -96,6 +96,7 @@ public class FileStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
+                log.info("File can't found---------------");
                 throw new StorageFileNotFoundException();
             }
         } catch (MalformedURLException e) {

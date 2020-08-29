@@ -34,6 +34,7 @@ public class StorageService {
     }
 
     public Storage findByMD5(String id) {
+        log.info("----------------------------md5 = {}" + id);
         return storageRepository.findByMd5(id).orElseThrow(StorageFileNotFoundException::new);
     }
 
