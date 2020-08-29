@@ -80,21 +80,19 @@ public class CountController {
     }
 
     @GetMapping("/shabi")
-    public ResultBean sss(){
+    public ResultBean<List<DepartmentTitleStatisticsDTO>> sss(){
         List<Department> departmentList = departmentService.findAll();
         List<DepartmentTitleStatisticsDTO> list = new ArrayList<>();
         for (Department department : departmentList){
             long number1 = administratorService.countByDepartment(department.getId(), "初级").stream().count();
             long number2 = administratorService.countByDepartment(department.getId(),"中级").stream().count();
             long number3 = administratorService.countByDepartment(department.getId(),"高级").stream().count();
-//            log.info("------------------------------------------------------------------------");
-//            log.info(String.format(department.getName()+number1+"    "+number2+"    "+number3));
             list.add(new DepartmentTitleStatisticsDTO()
                     .setDepartmentName(department.getName())
                     .setLow(number1)
                     .setMedium(number2)
                     .setHigh(number3));
         }
-        return ResultBean.ok();
+        return ResultBean.ok(list);
     }
 }
