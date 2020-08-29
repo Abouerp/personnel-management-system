@@ -108,7 +108,7 @@ public class AdministratorService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QAdministrator qAdministrator = QAdministrator.administrator;
         booleanBuilder.and(qAdministrator.roles.any().department.id.eq(departmentId));
-        booleanBuilder.and(qAdministrator.title.rank.containsIgnoreCase(rank));
+        booleanBuilder.and(qAdministrator.title.name.containsIgnoreCase(rank));
         return (List<Administrator>)administratorRepository.findAll(booleanBuilder);
     }
 }
