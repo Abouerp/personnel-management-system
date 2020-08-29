@@ -79,8 +79,8 @@ public class CountController {
         return ResultBean.ok(departmentStatisticsDTOS);
     }
 
-    @GetMapping("/shabi")
-    public ResultBean<List<DepartmentTitleStatisticsDTO>> sss(){
+    @GetMapping("/title-rank")
+    public ResultBean<List<DepartmentTitleStatisticsDTO>> countDepartmentTitleRank(){
         List<Department> departmentList = departmentService.findAll();
         List<DepartmentTitleStatisticsDTO> list = new ArrayList<>();
         for (Department department : departmentList){
