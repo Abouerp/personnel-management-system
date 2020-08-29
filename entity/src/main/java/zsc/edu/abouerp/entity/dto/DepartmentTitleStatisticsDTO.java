@@ -11,7 +11,6 @@ import lombok.experimental.Accessors;
 public class DepartmentTitleStatisticsDTO {
 
     private String departmentName;
-    private String titleName;
     private long low;
     private long medium;
     private long high;
