@@ -63,7 +63,7 @@ public class RoleChangeLoggerService {
 
     public long findByInDepartment(Integer id, Instant startTime, Instant endTime) {
         //部门新近人数
-        return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(it -> it.getBeforeDepartmentId() == it.getAdministratorId() &&
+        return changeLoggerRepository.findByAfterDepartmentId(id).stream().filter(it -> it.getBeforeDepartmentId() == it.getAfterDepartmentId() &&
                 it.getResign() == false &&
                 it.getCreateTime().getEpochSecond() >= startTime.getEpochSecond() &&
                 it.getCreateTime().getEpochSecond() <= endTime.getEpochSecond())
