@@ -3,6 +3,7 @@ package zsc.edu.abouerp.api.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import zsc.edu.abouerp.common.entiry.ResultBean;
 import zsc.edu.abouerp.entity.domain.Title;
@@ -26,7 +27,7 @@ public class TitleController {
         this.titleService = titleService;
     }
 
-    private static Title update(Title title, Optional<TitleVO> titleVO){
+    private static Title update(Title title, Optional<TitleVO> titleVO) {
         titleVO.map(TitleVO::getName).ifPresent(title::setName);
         titleVO.map(TitleVO::getDescription).ifPresent(title::setDescription);
         titleVO.map(TitleVO::getRank).ifPresent(title::setRank);
@@ -35,29 +36,33 @@ public class TitleController {
     }
 
     @PostMapping
-    public ResultBean<Title> save(@RequestBody TitleVO titleVO){
+    @PreAuthorize("hasAuthority('TITLE_CREATE')")
+    public ResultBean<Title> save(@RequestBody TitleVO titleVO) {
         return ResultBean.ok(titleService.save(TitleMapper.INSTANCE.toTitle(titleVO)));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('TITLE_UPDATE')")
     public ResultBean<Title> update(
             @PathVariable Integer id,
-            @RequestBody Optional<TitleVO> titleVO){
+            @RequestBody Optional<TitleVO> titleVO) {
         Title title = titleService.findById(id).orElseThrow(TitleNotFoundException::new);
         return ResultBean.ok(titleService.save(update(title, titleVO)));
     }
 
     @DeleteMapping("/{id}")
-    public ResultBean delete(@PathVariable Integer id){
+    @PreAuthorize("hasAuthority('TITLE_DELETE')")
+    public ResultBean delete(@PathVariable Integer id) {
         titleService.delete(id);
         return ResultBean.ok();
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('TITLE_READ')")
     public ResultBean<Page<Title>> findAll(
             @PageableDefault Pageable pageable,
-            TitleVO titleVO){
-        return ResultBean.ok(titleService.findAll(titleVO,pageable));
+            TitleVO titleVO) {
+        return ResultBean.ok(titleService.findAll(titleVO, pageable));
     }
 
 }

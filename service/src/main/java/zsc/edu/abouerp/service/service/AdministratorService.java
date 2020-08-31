@@ -111,24 +111,24 @@ public class AdministratorService {
         QAdministrator qAdministrator = QAdministrator.administrator;
         booleanBuilder.and(qAdministrator.roles.any().department.id.eq(departmentId));
         booleanBuilder.and(qAdministrator.title.name.containsIgnoreCase(rank));
-        return (List<Administrator>)administratorRepository.findAll(booleanBuilder);
+        return (List<Administrator>) administratorRepository.findAll(booleanBuilder);
     }
 
     @Transactional
-    public void wageTask(){
+    public void wageTask() {
         List<Administrator> all = administratorRepository.findAll();
         List<Administrator> after = new ArrayList<>(all.size());
-        for (Administrator administrator : all){
+        for (Administrator administrator : all) {
             Double wage = 0.0;
             PersonnelStatus status = administrator.getStatus();
-            if (status==PersonnelStatus.IN_OFFICE || status==PersonnelStatus.PROBATION){
+            if (status == PersonnelStatus.IN_OFFICE || status == PersonnelStatus.PROBATION) {
                 List<Role> roles = administrator.getRoles().stream().collect(Collectors.toList());
-                for (Role role : roles){
-                   wage += role.getBasicSalary();
+                for (Role role : roles) {
+                    wage += role.getBasicSalary();
                 }
                 wage += administrator.getTitle().getWage();
                 Instant offerTime = administrator.getOfferTime();
-                wage += (Instant.now().getEpochSecond() - offerTime.getEpochSecond())/31536000*100.0;
+                wage += (Instant.now().getEpochSecond() - offerTime.getEpochSecond()) / 31536000 * 100.0;
                 administrator.setWage(wage);
                 after.add(administrator);
             }

@@ -18,7 +18,7 @@ public class ScheduleTask {
     }
 
     @Scheduled(cron = "0 0 1 1 * ?")
-    private void wageTask(){
+    private void wageTask() {
         administratorService.wageTask();
     }
 

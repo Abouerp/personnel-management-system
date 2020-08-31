@@ -38,6 +38,7 @@ public class CountController {
 
     /**
      * 统计部门调入调出人数
+     *
      * @param startTime
      * @param endTime
      * @return
@@ -60,17 +61,18 @@ public class CountController {
 
     /**
      * 统计部门入职离职人数
+     *
      * @param startTime
      * @param endTime
      * @return
      */
     @GetMapping("/entry-resign")
-    public ResultBean<List<DepartmentStatisticsDTO>> out_in_offerDepartment(Instant startTime, Instant endTime){
+    public ResultBean<List<DepartmentStatisticsDTO>> out_in_offerDepartment(Instant startTime, Instant endTime) {
         List<DepartmentStatisticsDTO> departmentStatisticsDTOS = new ArrayList<>();
         List<Department> departments = departmentService.findAll();
         for (Department department : departments) {
             long inPerson = roleChangeLoggerService.findByInDepartment(department.getId(), startTime, endTime);
-            long outPerson = roleChangeLoggerService.findByOutDepartment(department.getId(),startTime, endTime);
+            long outPerson = roleChangeLoggerService.findByOutDepartment(department.getId(), startTime, endTime);
             departmentStatisticsDTOS.add(
                     new DepartmentStatisticsDTO()
                             .setDepartmentName(department.getName())
@@ -80,13 +82,13 @@ public class CountController {
     }
 
     @GetMapping("/title-rank")
-    public ResultBean<List<DepartmentTitleStatisticsDTO>> countDepartmentTitleRank(){
+    public ResultBean<List<DepartmentTitleStatisticsDTO>> countDepartmentTitleRank() {
         List<Department> departmentList = departmentService.findAll();
         List<DepartmentTitleStatisticsDTO> list = new ArrayList<>();
-        for (Department department : departmentList){
+        for (Department department : departmentList) {
             long number1 = administratorService.countByDepartment(department.getId(), "初级").stream().count();
-            long number2 = administratorService.countByDepartment(department.getId(),"中级").stream().count();
-            long number3 = administratorService.countByDepartment(department.getId(),"高级").stream().count();
+            long number2 = administratorService.countByDepartment(department.getId(), "中级").stream().count();
+            long number3 = administratorService.countByDepartment(department.getId(), "高级").stream().count();
             list.add(new DepartmentTitleStatisticsDTO()
                     .setDepartmentName(department.getName())
                     .setLow(number1)

@@ -48,7 +48,8 @@ public class DepartmentService {
         }
         return departmentRepository.findAll(booleanBuilder, pageable);
     }
-    public List<Department> findAll(){
+
+    public List<Department> findAll() {
         return departmentRepository.findAll();
     }
 }

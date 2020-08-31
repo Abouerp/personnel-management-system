@@ -23,34 +23,34 @@ public class TitleService {
         this.titleRepository = titleRepository;
     }
 
-    public Title save(Title title){
+    public Title save(Title title) {
         return titleRepository.save(title);
     }
 
-    public Optional<Title> findById(Integer id){
+    public Optional<Title> findById(Integer id) {
         return titleRepository.findById(id);
     }
 
-    public void delete(Integer id){
+    public void delete(Integer id) {
         titleRepository.deleteById(id);
     }
 
-    public Page<Title> findAll(TitleVO titleVO, Pageable pageable){
+    public Page<Title> findAll(TitleVO titleVO, Pageable pageable) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         QTitle qTitle = QTitle.title;
-        if (titleVO!=null && titleVO.getName()!=null && !titleVO.getName().isEmpty()){
+        if (titleVO != null && titleVO.getName() != null && !titleVO.getName().isEmpty()) {
             booleanBuilder.and(qTitle.name.containsIgnoreCase(titleVO.getName()));
         }
-        if (titleVO!=null&& titleVO.getRank()!=null && !titleVO.getRank().isEmpty()){
+        if (titleVO != null && titleVO.getRank() != null && !titleVO.getRank().isEmpty()) {
             booleanBuilder.and(qTitle.rank.containsIgnoreCase(titleVO.getRank()));
         }
-        if (titleVO!=null&& titleVO.getDescription()!=null && !titleVO.getDescription().isEmpty()){
+        if (titleVO != null && titleVO.getDescription() != null && !titleVO.getDescription().isEmpty()) {
             booleanBuilder.and(qTitle.description.containsIgnoreCase(titleVO.getDescription()));
         }
-        if (titleVO!=null&& titleVO.getWage()!=null){
-            booleanBuilder.and(qTitle.wage.between(0,titleVO.getWage()));
+        if (titleVO != null && titleVO.getWage() != null) {
+            booleanBuilder.and(qTitle.wage.between(0, titleVO.getWage()));
         }
-        return titleRepository.findAll(booleanBuilder,pageable);
+        return titleRepository.findAll(booleanBuilder, pageable);
     }
 
 }

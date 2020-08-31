@@ -44,6 +44,11 @@ public class init implements CommandLineRunner {
                     .setCredentialsNonExpired(true)
                     .setStatus(PersonnelStatus.IN_OFFICE)
                     .setEnabled(true)
+                    .setNumber("00001")
+                    .setRealName("杰哥哥")
+                    .setAddress("电子科技大学中山学院")
+                    .setEmail("12345679@qqq.com")
+                    .setMobile("1888999999")
                     .setRoles(Stream.of(role).collect(Collectors.toSet()));
             administratorRepository.save(administrator);
         }

@@ -28,7 +28,7 @@ public class StorageService {
                 .setMd5(md5)
                 .setContentType(file.getContentType())
                 .setOriginalFilename(file.getOriginalFilename())
-                .setCount(storage.getCount()+1);
+                .setCount(storage.getCount() + 1);
         log.info("stroage = {}", storage);
         storageRepository.save(storage);
     }
@@ -38,11 +38,11 @@ public class StorageService {
         return storageRepository.findByMd5(id).orElseThrow(StorageFileNotFoundException::new);
     }
 
-    public void deleteById(Integer id){
+    public void deleteById(Integer id) {
         storageRepository.deleteById(id);
     }
 
-    public Storage save(Storage storage){
+    public Storage save(Storage storage) {
         return storageRepository.save(storage);
     }
 

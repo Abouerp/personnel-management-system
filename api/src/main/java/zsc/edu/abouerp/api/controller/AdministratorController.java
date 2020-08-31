@@ -260,7 +260,7 @@ public class AdministratorController {
                     .setRealName(administrator.getRealName());
             roleChangeLoggerService.save(roleChangeLogger);
             administrator.setRoles(newRole.stream().collect(Collectors.toSet()));
-            emailService.sendEmail(administrator.getEmail(), administrator.getRealName(),null, newRole.get(0).getName() );
+            emailService.sendEmail(administrator.getEmail(), administrator.getRealName(), null, newRole.get(0).getName());
         }
         if (administratorVO != null && administratorVO.getTitleId() != null) {
             Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
@@ -268,7 +268,7 @@ public class AdministratorController {
         }
         if (administratorVO != null && administratorVO.getStatus() != null) {
             if (administratorVO.getStatus().equals(PersonnelStatus.IN_OFFICE) && !administrator.getStatus().equals(PersonnelStatus.IN_OFFICE)) {
-                emailService.sendEmail(administrator.getEmail(),administrator.getRealName(), administrator.getStatus(), null);
+                emailService.sendEmail(administrator.getEmail(), administrator.getRealName(), administrator.getStatus(), null);
             }
             if (administratorVO.getStatus().equals(PersonnelStatus.UN_OFFICE)) {
                 //离职记录
