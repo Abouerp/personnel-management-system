@@ -222,7 +222,7 @@ public class AdministratorController {
         administrator.setStatus(PersonnelStatus.PROBATION);
         administrator.setRoles(roles);
         AdministratorDTO administratorDTO = AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator));
-        emailService.sendEmail(administratorDTO.getEmail(), "收到offer啦菜鸟", "略略略");
+        emailService.sendEmail(administratorDTO.getEmail(), administrator.getRealName(), administrator.getStatus(), null);
         RoleChangeLogger roleChangeLogger = new RoleChangeLogger()
                 .setRealName(administratorDTO.getRealName())
                 .setAdministratorId(administratorDTO.getId())
@@ -260,6 +260,7 @@ public class AdministratorController {
                     .setRealName(administrator.getRealName());
             roleChangeLoggerService.save(roleChangeLogger);
             administrator.setRoles(newRole.stream().collect(Collectors.toSet()));
+            emailService.sendEmail(administrator.getEmail(), administrator.getRealName(),null, newRole.get(0).getName() );
         }
         if (administratorVO != null && administratorVO.getTitleId() != null) {
             Title title = titleService.findById(administratorVO.getTitleId()).orElseThrow(TitleNotFoundException::new);
@@ -267,7 +268,7 @@ public class AdministratorController {
         }
         if (administratorVO != null && administratorVO.getStatus() != null) {
             if (administratorVO.getStatus().equals(PersonnelStatus.IN_OFFICE) && !administrator.getStatus().equals(PersonnelStatus.IN_OFFICE)) {
-                emailService.sendEmail(administrator.getEmail(), "转正啦菜鸟", "嘿嘿嘿");
+                emailService.sendEmail(administrator.getEmail(),administrator.getRealName(), administrator.getStatus(), null);
             }
             if (administratorVO.getStatus().equals(PersonnelStatus.UN_OFFICE)) {
                 //离职记录
@@ -283,6 +284,7 @@ public class AdministratorController {
                         .setAfterRoleName(roles.get(0).getName())
                         .setResign(true);
                 roleChangeLoggerService.save(roleChangeLogger);
+                emailService.sendEmail(administrator.getEmail(), administrator.getRealName(), administrator.getStatus(), null);
             }
         }
         return ResultBean.ok(AdministratorMapper.INSTANCE.toDTO(administratorService.save(update(administrator, administratorVO))));
