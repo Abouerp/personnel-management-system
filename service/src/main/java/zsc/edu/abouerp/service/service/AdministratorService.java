@@ -6,14 +6,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zsc.edu.abouerp.entity.domain.Administrator;
+import zsc.edu.abouerp.entity.domain.PersonnelStatus;
 import zsc.edu.abouerp.entity.domain.QAdministrator;
+import zsc.edu.abouerp.entity.domain.Role;
 import zsc.edu.abouerp.entity.vo.AdministratorVO;
 import zsc.edu.abouerp.service.repository.AdministratorRepository;
 import zsc.edu.abouerp.service.repository.RoleRepository;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.time.Instant;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Abouerp
@@ -110,5 +112,27 @@ public class AdministratorService {
         booleanBuilder.and(qAdministrator.roles.any().department.id.eq(departmentId));
         booleanBuilder.and(qAdministrator.title.rank.containsIgnoreCase(rank));
         return (List<Administrator>)administratorRepository.findAll(booleanBuilder);
+    }
+
+    @Transactional
+    public void wageTask(){
+        List<Administrator> all = administratorRepository.findAll();
+        List<Administrator> after = new ArrayList<>(all.size());
+        for (Administrator administrator : all){
+            Double wage = 0.0;
+            PersonnelStatus status = administrator.getStatus();
+            if (status==PersonnelStatus.IN_OFFICE || status==PersonnelStatus.PROBATION){
+                List<Role> roles = administrator.getRoles().stream().collect(Collectors.toList());
+                for (Role role : roles){
+                   wage += role.getBasicSalary();
+                }
+                wage += administrator.getTitle().getWage();
+                Instant offerTime = administrator.getOfferTime();
+                wage += (Instant.now().getEpochSecond() - offerTime.getEpochSecond())/31536000*100.0;
+                administrator.setWage(wage);
+                after.add(administrator);
+            }
+        }
+        administratorRepository.saveAll(after);
     }
 }
