@@ -21,6 +21,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - personnel_management_redis_data:/data
+      - /root/PersonnelManagement-storage:/PersonnelManagement/storage
     restart: always
 
   mysql:
@@ -31,7 +32,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ./deploy/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
       - personnel_management_mysql_data:/var/lib/mysql
-      - /root/PersonnelManagement-storage:/PersonnelManagement/storage
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     restart: always
