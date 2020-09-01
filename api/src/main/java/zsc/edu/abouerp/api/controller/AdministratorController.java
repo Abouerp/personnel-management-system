@@ -295,6 +295,7 @@ public class AdministratorController {
     public ResultBean delete(@PathVariable Integer id) {
         Administrator administrator = administratorService.findById(id).orElseThrow(UserNotFoundException::new);
         if (administrator.getMd5() != null) {
+            log.info("delete personnel has md5=========================");
             Storage storage = storageService.findByMD5(administrator.getMd5());
             if (storage.getCount() - 1 == 0) {
                 fileStorageService.delete(storage.getMd5());
