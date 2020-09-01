@@ -295,17 +295,17 @@ public class AdministratorController {
     @PreAuthorize("hasAuthority('USER_DELETE')")
     public ResultBean delete(@PathVariable Integer id) {
         Administrator administrator = administratorService.findById(id).orElseThrow(UserNotFoundException::new);
-        if (administrator.getMd5() != null && !administrator.getMd5().isEmpty()) {
-            log.info("delete personnel has md5========================= {}", administrator.getMd5());
-            Storage storage = storageService.findByMD5(administrator.getMd5());
-            if (storage.getCount() - 1 == 0) {
-                fileStorageService.delete(storage.getMd5());
-                storageService.deleteById(storage.getId());
-            } else {
-                storage.setCount(storage.getCount() - 1);
-                storageService.save(storage);
-            }
-        }
+//        if (administrator.getMd5() != null && !administrator.getMd5().isEmpty()) {
+//            log.info("delete personnel has md5========================= {}", administrator.getMd5());
+//            Storage storage = storageService.findByMD5(administrator.getMd5());
+//            if (storage.getCount() - 1 == 0) {
+//                fileStorageService.delete(storage.getMd5());
+//                storageService.deleteById(storage.getId());
+//            } else {
+//                storage.setCount(storage.getCount() - 1);
+//                storageService.save(storage);
+//            }
+//        }
         administratorService.delete(id);
         return ResultBean.ok();
     }
