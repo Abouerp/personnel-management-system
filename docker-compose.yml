@@ -12,6 +12,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./deploy/resources/application.yml:/app/resources/application.yml:ro
+      - /root/PersonnelManagement-storage:/PersonnelManagement/storage
     restart: always
 
   redis:
@@ -21,7 +22,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - personnel_management_redis_data:/data
-      - /root/PersonnelManagement-storage:/PersonnelManagement/storage
+
     restart: always
 
   mysql:
