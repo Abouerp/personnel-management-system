@@ -63,37 +63,37 @@ public class AdministratorController {
     }
 
     private static Administrator update(Administrator administrator, AdministratorVO adminVO) {
-        if (adminVO != null && adminVO.getEmail() != null) {
+        if (adminVO != null && adminVO.getEmail() != null && !adminVO.getEmail().isEmpty()) {
             administrator.setEmail(adminVO.getEmail());
         }
-        if (adminVO != null && adminVO.getMobile() != null) {
+        if (adminVO != null && adminVO.getMobile() != null && ! adminVO.getMobile().isEmpty()) {
             administrator.setMobile(adminVO.getMobile());
         }
         if (adminVO != null && adminVO.getEnabled() != null) {
             administrator.setEnabled(adminVO.getEnabled());
         }
-        if (adminVO != null && adminVO.getRealName() != null) {
+        if (adminVO != null && adminVO.getRealName() != null&& !adminVO.getRealName().isEmpty()) {
             administrator.setRealName(adminVO.getRealName());
         }
-        if (adminVO != null && adminVO.getAddress() != null) {
+        if (adminVO != null && adminVO.getAddress() != null && !adminVO.getAddress().isEmpty()) {
             administrator.setAddress(adminVO.getAddress());
         }
-        if (adminVO != null && adminVO.getNumber() != null) {
+        if (adminVO != null && adminVO.getNumber() != null && !adminVO.getNumber().isEmpty()) {
             administrator.setNumber(adminVO.getNumber());
         }
-        if (adminVO != null && adminVO.getIdCard() != null) {
+        if (adminVO != null && adminVO.getIdCard() != null && !adminVO.getIdCard().isEmpty()) {
             administrator.setIdCard(adminVO.getIdCard());
         }
-        if (adminVO != null && adminVO.getDescription() != null) {
+        if (adminVO != null && adminVO.getDescription() != null && !adminVO.getDescription().isEmpty()) {
             administrator.setDescription(adminVO.getDescription());
         }
-        if (adminVO != null && adminVO.getSex() != null) {
+        if (adminVO != null && adminVO.getSex() != null && !adminVO.getSex().isEmpty()) {
             administrator.setSex(adminVO.getSex());
         }
         if (adminVO != null && adminVO.getStatus() != null) {
             administrator.setStatus(adminVO.getStatus());
         }
-        if (adminVO != null && adminVO.getMd5() != null) {
+        if (adminVO != null && adminVO.getMd5() != null && !adminVO.getMd5().isEmpty()) {
             administrator.setMd5(adminVO.getMd5());
         }
         if (adminVO != null && adminVO.getOfferTime() != null) {
@@ -117,7 +117,7 @@ public class AdministratorController {
             if (adminVO.getResignMessage().getResign() != null) {
                 resignMessage.setResign(adminVO.getResignMessage().getResign());
             }
-            if (adminVO.getResignMessage().getReason() != null) {
+            if (adminVO.getResignMessage().getReason() != null && !adminVO.getResignMessage().getReason().isEmpty()) {
                 resignMessage.setReason(adminVO.getResignMessage().getReason());
             }
             if (adminVO.getResignMessage().getTime() != null) {
