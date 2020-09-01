@@ -221,6 +221,7 @@ public class AdministratorController {
         }
         administrator.setStatus(PersonnelStatus.PROBATION);
         administrator.setRoles(roles);
+        administrator.setEnabled(true);
         AdministratorDTO administratorDTO = AdministratorMapper.INSTANCE.toDTO(administratorService.save(administrator));
         emailService.sendEmail(administratorDTO.getEmail(), administrator.getRealName(), administrator.getStatus(), null);
         RoleChangeLogger roleChangeLogger = new RoleChangeLogger()
