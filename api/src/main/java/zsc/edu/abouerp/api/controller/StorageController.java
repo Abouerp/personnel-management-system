@@ -36,7 +36,7 @@ public class StorageController {
     }
 
     @GetMapping(value = "/preview/{id}")
-    public ResponseEntity<Resource> preview(@PathVariable String id) {
+    public ResponseEntity<Resource> preview(@PathVariable String id) throws Exception{
         Storage storage = storageService.findByMD5(id);
         return ResponseEntity
                 .ok()
