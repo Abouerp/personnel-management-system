@@ -90,9 +90,10 @@ public class FileStorageService {
         }
     }
 
-    public Resource findByHash(String hash) {
+    public Resource findByHash(String hash) throws Exception{
         try {
             Resource resource = new UrlResource(rootLocation.resolve(hash).toUri());
+            log.info("url = {}===================================", resource.getURI().toString());
             if (resource.exists() || resource.isReadable()) {
                 log.info("--------------------File can be find==============");
                 return resource;
