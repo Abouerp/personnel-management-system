@@ -94,12 +94,14 @@ public class FileStorageService {
         try {
             Resource resource = new UrlResource(rootLocation.resolve(hash).toUri());
             if (resource.exists() || resource.isReadable()) {
+                log.info("--------------------File can be find==============");
                 return resource;
             } else {
                 log.info("File can't found---------------");
                 throw new StorageFileNotFoundException();
             }
         } catch (MalformedURLException e) {
+            log.info("localhost is error=====================");
             throw new StorageFileNotFoundException();
         }
     }
