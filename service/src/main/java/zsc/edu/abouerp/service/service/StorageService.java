@@ -34,11 +34,7 @@ public class StorageService {
     }
 
     public Storage findByMD5(String id) {
-        Storage storage = storageRepository.findByMd5(id).orElseThrow(StorageFileNotFoundException::new);
-        if (storage == null){
-            log.info(String.format("Storage can' be find =========================="));
-        }
-        return storage;
+        return storageRepository.findByMd5(id).orElseThrow(StorageFileNotFoundException::new);
     }
 
     public void deleteById(Integer id) {
@@ -48,6 +44,5 @@ public class StorageService {
     public Storage save(Storage storage) {
         return storageRepository.save(storage);
     }
-
 
 }
