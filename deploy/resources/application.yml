@@ -28,12 +28,12 @@ spring:
 
   mail:
     host: smtp.qq.com
-    username: 1057240821@qq.com
-    password: rdaptnznzeezbfde
+    username:
+    password:
     default-encoding: UTF-8
     port: 587
 
 storage:
   location: /PersonnelManagement/storage
 email:
-  username: 1057240821@qq.com
+  username:
